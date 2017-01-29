@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
 
 public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 
@@ -22,11 +23,23 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 	
 	}
 
+
 	/* SocketConnectionInterface */
+
+	IEnumerator parseData(int code, JToken data)
+	{
+		yield return null;
+	}
 
 	public void receiveData(string dt)
 	{
+		JArray resArray = JArray.Parse (dt);
+		JToken response = resArray.First["response"];
 
+		JToken responseTkn = response.SelectToken ("data");
+		int responseCd = (int)response.SelectToken("code");
+
+		StartCoroutine(parseData(responseCd,responseTkn));
 	}
 
 	public void handleError()
