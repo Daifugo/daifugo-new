@@ -32,10 +32,16 @@ public class RuleItem : MonoBehaviour {
 
 	}
 
+	public bool isToggleActive()
+	{
+		return this.ruleCheckMark.GetComponent<Toggle> ().isOn;
+	}
+
+
 	// Use this for initialization
 
 	void Start () {
-
+		Debug.Log("asdfs");
 		gameObject.GetComponent<RectTransform>().offsetMax = Vector2.zero;
 		gameObject.GetComponent<RectTransform>().offsetMin = Vector2.zero;
 		gameObject.GetComponent<RectTransform> ().sizeDelta = new Vector2(0.0f,_height);
