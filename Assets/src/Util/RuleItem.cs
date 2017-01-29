@@ -7,6 +7,7 @@ public class RuleItem : MonoBehaviour {
 
 	public GameObject ruleName;
 	public GameObject ruleDescription;
+	public GameObject ruleCheckMark;
 
 	private float _height = 0.0f;
 	private float _YCoor = 0.0f;
@@ -22,6 +23,13 @@ public class RuleItem : MonoBehaviour {
 	{
 		_height = height;
 		_YCoor = YCoor;
+	}
+
+	public void setToggleUIHandler(UnityEngine.Events.UnityAction<bool> handler)
+	{
+
+		this.ruleCheckMark.GetComponent<Toggle> ().onValueChanged.AddListener (handler);
+
 	}
 
 	// Use this for initialization
