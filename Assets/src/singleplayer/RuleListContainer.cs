@@ -41,7 +41,7 @@ public class RuleListContainer : MonoBehaviour {
 
 		rule.TryGetValue ("ruleName", out ruleName);
 		rule.TryGetValue ("ruleDescription", out ruleDescription);
-		// rule.TryGetValue("ruleId", out ruleId);
+		rule.TryGetValue("ruleId", out ruleId);
 
 		/* set details */
 
