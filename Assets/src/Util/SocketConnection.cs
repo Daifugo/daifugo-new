@@ -12,6 +12,18 @@ public class SocketConnection : MonoBehaviour {
 	private SocketConnectionInterface _delegator = null;
 	private WebSocket _sock;
 
+
+	IEnumerator sendData(string dt)
+	{
+
+		while(_sock == null || !_sock.IsAlive)
+			yield return null;
+		
+		_sock.SendAsync (dt, null);
+
+	}
+
+
 	void Start()
 	{
 
@@ -41,6 +53,13 @@ public class SocketConnection : MonoBehaviour {
 
 		_sock.ConnectAsync ();
 
+	}
+
+
+	public void sendJSON(int code, Dictionary<string,object> dt)
+	{
+		string jsonString = JSONMaker.makeJSON (code,dt);
+		StartCoroutine(sendData(jsonString));
 	}
 
 
