@@ -12,7 +12,8 @@ public class SocketConnection : MonoBehaviour {
 	private SocketConnectionInterface _delegator = null;
 	private WebSocket _sock;
 
-	void Start(){
+	void Start()
+	{
 
 		Debug.Log ("start connecting");
 
@@ -40,6 +41,12 @@ public class SocketConnection : MonoBehaviour {
 
 		_sock.ConnectAsync ();
 
+	}
+
+
+	public void setDelegate(SocketConnectionInterface i)
+	{
+		this._delegator = i;
 	}
 	
 	// Update is called once per frame
