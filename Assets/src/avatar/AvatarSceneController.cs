@@ -19,14 +19,14 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 		/* If user wants multiplayer */
 
-		// if(PlayerPrefs.HasKey("roomId"))
-		// {	
+		if(PlayerPrefs.HasKey("roomId"))
+		{	
 			Dictionary<string,object> data = new Dictionary<string,object>(){
 				{"roomId", "asdfs"}
 			};
 
 			_tr.requestSelectedAvatars(data);
-		// }
+		}
 
 	}
 	
