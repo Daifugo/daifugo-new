@@ -7,9 +7,10 @@ using System.Collections.Generic;
 public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 
 	public GameObject transporter;
-	public RuleListContainer ruleList;
+	public GameObject roomList;
 
 	private Transporter _tr;
+	private JToken _responseToken = null;
 
 	// Use this for initialization
 	void Start () {
@@ -26,16 +27,32 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 	
 	}
 
-
 	/* SocketConnectionInterface */
+
+	IEnumerator parseData()
+	{
+
+		/* Only expect data with the ROOMLIST_CODE */
+		while(_responseToken == null)
+			yield return null;
+
+		JArray rms = (JArray)_responseToken;
+		RoomListContainer r = roomList.GetComponent<RoomListContainer> ();
+
+		foreach (JToken s in rms) 
+		{
+			Dictionary<string,object> roomData = s.ToObject<Dictionary<string,object>> ();
+			r.addRooms (roomData);
+		}
+
+	}
 
 	public void receiveData(string dt)
 	{
 		JArray resArray = JArray.Parse (dt);
 		JToken response = resArray.First["response"];
 
-		JToken responseTkn = response.SelectToken ("data");
-		int responseCd = (int)response.SelectToken("code");
+		_responseToken = response.SelectToken ("data");
 	}
 
 	public void handleError()
