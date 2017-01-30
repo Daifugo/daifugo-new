@@ -22,6 +22,25 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 		_tr.requestRooms();
 
 		StartCoroutine (parseData ());
+
+		string[] str = {"asdfs", "qwe","zxczxczx"};
+
+				Dictionary<string,object> s = new Dictionary<string,object>(){
+			{"roomName","asdfs"},
+			{"rules",str},
+			{"numOfPlayer","4"}
+		};
+
+				string[] str1 = {"asdfs", "qwe","zxczxczx"};
+
+		Dictionary<string,object> m = new Dictionary<string,object>(){
+			{"roomName","asdfs"},
+			{"rules",str1},
+			{"numOfPlayer","4"}
+		};
+
+		roomList.GetComponent<RoomListContainer>().addRooms(s);
+		roomList.GetComponent<RoomListContainer>().addRooms(m);
 	}
 	
 	// Update is called once per frame
@@ -35,6 +54,7 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 	{
 			
 		/* Only expect data with the ROOMLIST_CODE */
+
 		while(_responseToken == null)
 			yield return null;
 
@@ -61,6 +81,24 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 
 	public void handleError()
 	{
+
+	}
+
+
+	/* Button handlers */
+
+	public void nextButtonHandler()
+	{
+		/* Get the selected room to join */ 
+
+		RoomListContainer r = roomList.GetComponent<RoomListContainer> ();
+
+		string roomId = r.getSelectedRoomToJoin();
+
+		/* save it */
+
+		PlayerPrefs.SetString ("roomId", roomId);
+		SceneManager.LoadScene ("avatar");
 
 	}
 
