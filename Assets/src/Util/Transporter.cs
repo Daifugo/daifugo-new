@@ -21,10 +21,21 @@ public class Transporter : MonoBehaviour {
 		_socket.setDelegate (i);
 	}
 
+	/* Singleplayer scene */
 
 	public void requestRules()
 	{
 		_socket.sendJSON(Constants.RULELIST_CODE,new Dictionary<string,object>());
 	}
+
+
+	/* Multiplayer scene */
+
+	public void requestRooms()
+	{
+		_socket.sendJSON(Constants.ROOMLIST_CODE, new Dictionary<string,object>());
+	}
+
+
 
 }
