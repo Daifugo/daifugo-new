@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class AvatarController : MonoBehaviour {
+public class AvatarsContainer : MonoBehaviour {
 
 
 	private Transform _selectedAvatar = null;
