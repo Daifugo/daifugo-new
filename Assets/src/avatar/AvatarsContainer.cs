@@ -1,35 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class AvatarsContainer : MonoBehaviour {
 
 
 	private Transform _selectedAvatar = null;
+	private List<int> _selectedAvatars = null;
+
+	private bool _finishAnimation = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 	
+		_selectedAvatars = new List<int>();
 	}
-	
+
+	public void disableAvatars(int index)
+	{
+
+		if(_finishAnimation)
+		{
+			transform.GetChild(index).GetComponent<AvatarItem>().disableAvatar();
+		}
+		else
+		{
+			_selectedAvatars.Add(index);
+		}
+
+	}
+
 
 	/* Animation Event Callback */
 
 	public void addClickHandlers()
 	{
 
-		avatarThumbnailHandler(transform.GetChild(0));
+		if(!_selectedAvatars.Contains(0))
+			avatarThumbnailHandler(transform.GetChild(0));
+
 
 		for(int i = 0;i < transform.childCount;i++)
 		{
 			Transform child = transform.GetChild(i);
 
-			child.GetComponent<Button>().onClick.AddListener(delegate{
-
-				avatarThumbnailHandler(child);
-
-			});
+			if(_selectedAvatars.Contains(i))
+			{
+				child.GetComponent<AvatarItem>().disableAvatar();
+			}
+			else
+			{
+				child.GetComponent<Button>().onClick.AddListener(delegate{
+					avatarThumbnailHandler(child);
+				});
+			}
 		}
+
+		_finishAnimation = true;
+
 	}
 
 	
