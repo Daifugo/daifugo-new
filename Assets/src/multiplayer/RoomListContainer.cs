@@ -62,9 +62,18 @@ public class RoomListContainer : MonoBehaviour {
 		roomCount++;
 	}
 
+
+	public string getSelectedRoomToJoin()
+	{
+		return this.selectedRoom.GetComponent<RoomItem>().getRoomId();
+	}
+
+
 	void Start()
 	{
 
 	}
+
+
 
 }
