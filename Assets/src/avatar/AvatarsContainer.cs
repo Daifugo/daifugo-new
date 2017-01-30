@@ -11,6 +11,7 @@ public class AvatarsContainer : MonoBehaviour {
 	void Start () {
 	
 	}
+	
 
 	/* Animation Event Callback */
 
@@ -30,28 +31,16 @@ public class AvatarsContainer : MonoBehaviour {
 			});
 		}
 	}
+
 	
 	private void avatarThumbnailHandler(Transform s)
 	{
 
 		if(_selectedAvatar != null)
-			a(_selectedAvatar,false);
+			_selectedAvatar.GetComponent<AvatarItem>().toggleShowSelected();
 
 		_selectedAvatar = s;
-		a(s,true);
-	}
-
-
-	private void a(Transform c, bool status)
-	{
-
-		for(int i = 0;i < c.childCount;i++)
-		{
-			Transform child = c.GetChild(i);
-
-			if(child.tag == "avatarOverlay")
-				child.gameObject.SetActive(status);
-		}
+		s.GetComponent<AvatarItem>().toggleShowSelected();
 
 	}
 
