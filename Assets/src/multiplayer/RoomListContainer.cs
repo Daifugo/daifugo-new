@@ -9,6 +9,23 @@ public class RoomListContainer : MonoBehaviour {
 	private int roomCount = 0;
 	private float roomItemGap = 5.0f;
 
+
+	private GameObject selectedRoom = null;
+
+
+	public void toggleHandler(GameObject s)
+	{
+
+		if(this.selectedRoom != null)
+		{
+			this.selectedRoom.GetComponent<RoomItem> ().deactivateCheck ();
+		}
+
+		this.selectedRoom = s;
+	}
+
+
+
 	public void addRooms(Dictionary<string,object> rule)
 	{
 
@@ -34,6 +51,13 @@ public class RoomListContainer : MonoBehaviour {
 
 		float YCoor = (((roomCount * roomItemHeight) + (roomCount * roomItemGap)) * (-1)) + startRoomYCoor;
 		r.setGeometry(YCoor, roomItemHeight);
+
+
+		/* add handler for the checkmark UI */
+
+		r.setToggleUIHandler (delegate{
+			this.toggleHandler (roomObj);
+		});
 
 		roomCount++;
 	}
