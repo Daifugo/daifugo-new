@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AvatarItem : MonoBehaviour {
 
@@ -13,6 +14,12 @@ public class AvatarItem : MonoBehaviour {
 		overlay.SetActive(_selected);
 	}
 
+	public void disableAvatar()
+	{
+		overlay.SetActive(true);
+		overlay.transform.DetachChildren();
+		transform.GetComponent<Button>().onClick.RemoveAllListeners();
+	}
 
 	// Use this for initialization
 	void Start () {
