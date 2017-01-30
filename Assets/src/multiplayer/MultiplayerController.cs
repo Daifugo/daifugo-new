@@ -31,7 +31,11 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 
 	public void receiveData(string dt)
 	{
+		JArray resArray = JArray.Parse (dt);
+		JToken response = resArray.First["response"];
 
+		JToken responseTkn = response.SelectToken ("data");
+		int responseCd = (int)response.SelectToken("code");
 	}
 
 	public void handleError()
