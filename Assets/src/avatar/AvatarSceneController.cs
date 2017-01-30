@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Newtonsoft.Json.Linq;
+
 public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 
 	// Use this for initialization
 
 	Transporter _tr = null;
+	JToken _responseToken = null;
 
 	void Start () {
 	
@@ -37,7 +40,10 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 	public void receiveData(string dt)
 	{
+		JArray resArray = JArray.Parse (dt);
+		JToken response = resArray.First["response"];
 
+		_responseToken = response.SelectToken ("data");
 	}
 
 	public void handleError()
