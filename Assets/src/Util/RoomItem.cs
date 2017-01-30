@@ -42,6 +42,15 @@ public class RoomItem : MonoBehaviour {
 
 	}
 
+	public string getRoomId()
+	{
+		char[] splitChar = {' '};
+		string str = this.roomName.GetComponent<Text>().text;
+		string[] strs = str.Split(splitChar);
+		
+		return strs[1];
+	}
+
 
 	public void setToggleUIHandler(UnityEngine.Events.UnityAction<bool> handler)
 	{
