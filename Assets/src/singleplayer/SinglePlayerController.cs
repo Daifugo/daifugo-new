@@ -2,10 +2,13 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 
 	public GameObject transporter;
+	public RuleListContainer ruleList;
+
 	private Transporter _tr;
 
 	// Use this for initialization
