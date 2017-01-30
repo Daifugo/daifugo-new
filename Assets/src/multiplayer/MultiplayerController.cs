@@ -22,25 +22,6 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 		_tr.requestRooms();
 
 		StartCoroutine (parseData ());
-
-		string[] str = {"asdfs", "qwe","zxczxczx"};
-
-				Dictionary<string,object> s = new Dictionary<string,object>(){
-			{"roomName","asdfs"},
-			{"rules",str},
-			{"numOfPlayer","4"}
-		};
-
-				string[] str1 = {"asdfs", "qwe","zxczxczx"};
-
-		Dictionary<string,object> m = new Dictionary<string,object>(){
-			{"roomName","asdfs"},
-			{"rules",str1},
-			{"numOfPlayer","4"}
-		};
-
-		roomList.GetComponent<RoomListContainer>().addRooms(s);
-		roomList.GetComponent<RoomListContainer>().addRooms(m);
 	}
 	
 	// Update is called once per frame
