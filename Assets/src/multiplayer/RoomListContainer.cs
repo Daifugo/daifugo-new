@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class RoomListContainer : MonoBehaviour {
 
+	private float startRoomYCoor = -100.0f;
+	private float roomItemHeight = 244.0f;
+	private int roomCount = 0;
+	private float roomItemGap = 5.0f;
 
 	public void addRooms(Dictionary<string,object> rule)
 	{
@@ -25,6 +29,13 @@ public class RoomListContainer : MonoBehaviour {
 		/* set details */
 
 		r.setRoomDetails((string[])rules,(string)roomName,(string)numOfPlayer);
+
+		/* set geometry */
+
+		float YCoor = (((roomCount * roomItemHeight) + (roomCount * roomItemGap)) * (-1)) + startRoomYCoor;
+		r.setGeometry(YCoor, roomItemHeight);
+
+		roomCount++;
 	}
 
 	void Start()
