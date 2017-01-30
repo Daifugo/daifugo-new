@@ -8,6 +8,7 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 
 	public GameObject transporter;
 	public GameObject roomList;
+	public GameObject nextButton;
 
 	private Transporter _tr;
 	private JToken _responseToken = null;
@@ -20,6 +21,7 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 
 		_tr.requestRooms();
 
+		StartCoroutine (parseData ());
 	}
 	
 	// Update is called once per frame
@@ -31,7 +33,7 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 
 	IEnumerator parseData()
 	{
-
+			
 		/* Only expect data with the ROOMLIST_CODE */
 		while(_responseToken == null)
 			yield return null;
@@ -44,6 +46,8 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 			Dictionary<string,object> roomData = s.ToObject<Dictionary<string,object>> ();
 			r.addRooms (roomData);
 		}
+
+		nextButton.SetActive (true);
 
 	}
 
@@ -59,6 +63,5 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 	{
 
 	}
-
 
 }
