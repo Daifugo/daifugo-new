@@ -7,6 +7,7 @@ public class RoomItem : MonoBehaviour {
 	public GameObject roomName;
 	public GameObject rules;
 	public GameObject numOfPlayers;
+	public GameObject checkMark;
 
 	private float _height = 0.0f;
 	private float _YCoor = 0.0f;
@@ -40,6 +41,19 @@ public class RoomItem : MonoBehaviour {
 
 
 	}
+
+
+	public void setToggleUIHandler(UnityEngine.Events.UnityAction<bool> handler)
+	{
+		checkMark.GetComponent<Toggle> ().onValueChanged.AddListener (handler);
+	}
+
+
+	public void deactivateCheck()
+	{	
+		checkMark.GetComponent<Toggle> ().isOn = false;
+	}
+
 
 	public void setGeometry(float YCoor, float height)
 	{
