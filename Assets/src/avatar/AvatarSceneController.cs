@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 using Newtonsoft.Json.Linq;
 
@@ -38,7 +39,7 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 	void Update () {
 	
 	}
-	
+
 
 	IEnumerator parseData()
 	{
@@ -55,7 +56,7 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 					JObject userObject = (JObject)_responseToken;
 					string tempId = (string)userObject.GetValue("userId");
-					PlayerPrefs.SetString ("userId", _tempId);
+					PlayerPrefs.SetString ("userId", tempId);
 					SceneManager.LoadScene ("game");
 
 				break;
@@ -82,7 +83,7 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 		JToken response = resArray.First["response"];
 
 		_responseToken = response.SelectToken ("data");
-		_responseCode = response.SelectToken("code");
+		_responseCode = (int)response.SelectToken("code");
 	}
 
 	public void handleError()
