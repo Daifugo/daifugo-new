@@ -8,6 +8,7 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 
 	public GameObject avatarContainer;
+	public GameObject overlay;
 
 	Transporter _tr = null;
 	JToken _responseToken = null;
@@ -66,6 +67,37 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 	public void handleError()
 	{
+
+	}
+
+
+	/* Button Handlers */
+
+	public void nextButtonHandler()
+	{
+		// Show loading overlay
+
+		overlay.SetActive(true);
+
+
+		// Send join/start request to server
+
+		Dictionary<string,object> d = new Dictionary<string,object> ();
+
+		AvatarsContainer avc = avatarContainer.GetComponent<AvatarsContainer> ();	
+		d.Add("avatarId",avc.getIndexSelectedAvatar());
+
+		if(PlayerPrefs.HasKey("roomId"))
+		{
+			d.Add("roomId",PlayerPrefs.GetString("roomId"));
+			_tr.sendJoinRequest (d);
+		}
+		else
+		{
+			d.Add("mode", PlayerPrefs.GetString("mode"));
+			d.Add("rules",PlayerPrefs.GetString("rules"));
+			_tr.sendStartRequest(d);
+		}
 
 	}
 
