@@ -28,12 +28,28 @@ public class Transporter : MonoBehaviour {
 		_socket.sendJSON(Constants.RULELIST_CODE,new Dictionary<string,object>());
 	}
 	
+	/* Multiplayer scene */
+
+	public void requestRooms()
+	{
+		_socket.sendJSON(Constants.ROOMLIST_CODE,new Dictionary<string,object>(){});
+	}
 
 	/* Avatar Scene */
 
 	public void requestSelectedAvatars(Dictionary<string,object> dt)
 	{
 		_socket.sendJSON(Constants.REQUESTAVATARS_CODE,dt);
+	}
+
+	public void sendJoinRequest(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.JOINGAME_CODE,dt);
+	}
+
+	public void sendStartRequest(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.STARTGAME_CODE,dt);
 	}
 
 }
