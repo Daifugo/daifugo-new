@@ -12,7 +12,7 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 	Transporter _tr = null;
 	JToken _responseToken = null;
-
+	int _responseCode = 0;
 
 	void Start () {
 	
@@ -38,24 +38,43 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 	void Update () {
 	
 	}
+	
 
 	IEnumerator parseData()
 	{
 
-		/* Only expect data with the REQUESTAVATARS_CODE */
-
-		while(_responseToken == null)
-			yield return null;
-
-		JArray rms = (JArray)_responseToken;
-		AvatarsContainer ava = avatarContainer.GetComponent<AvatarsContainer> ();
-
-		foreach (JToken s in rms) 
+		while(true)
 		{
-			ava.disableAvatars ((int)s);
-		}
+			while(_responseToken == null)
+				yield return null;
 
+
+			switch(_responseCode)
+			{
+				case Constants.LOBBYDETAILS_CODE:
+
+					JObject userObject = (JObject)_responseToken;
+					string tempId = (string)userObject.GetValue("userId");
+					PlayerPrefs.SetString ("userId", _tempId);
+					SceneManager.LoadScene ("game");
+
+				break;
+
+				case Constants.REQUESTAVATARS_CODE:
+
+					JArray rms = (JArray)_responseToken;
+					AvatarsContainer ava = avatarContainer.GetComponent<AvatarsContainer> ();
+
+					foreach (JToken s in rms) 
+						ava.disableAvatars ((int)s);
+
+				break;
+			}
+
+			_responseToken = null;
+		}
 	}
+
 
 	public void receiveData(string dt)
 	{
@@ -63,6 +82,7 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 		JToken response = resArray.First["response"];
 
 		_responseToken = response.SelectToken ("data");
+		_responseCode = response.SelectToken("code");
 	}
 
 	public void handleError()
