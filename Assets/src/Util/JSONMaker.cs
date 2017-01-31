@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.IO;
 
-public static class JSONMaker : MonoBehaviour {
+public static class JSONMaker{
 
 
 	public static string makeJSON(int code, Dictionary<string,object> data = null)
