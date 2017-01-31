@@ -27,15 +27,13 @@ public class Transporter : MonoBehaviour {
 	{
 		_socket.sendJSON(Constants.RULELIST_CODE,new Dictionary<string,object>());
 	}
+	
 
+	/* Avatar Scene */
 
-	/* Multiplayer scene */
-
-	public void requestRooms()
+	public void requestSelectedAvatars(Dictionary<string,object> dt)
 	{
-		_socket.sendJSON(Constants.ROOMLIST_CODE, new Dictionary<string,object>());
+		_socket.sendJSON(Constants.REQUESTAVATARS_CODE,dt);
 	}
-
-
 
 }
