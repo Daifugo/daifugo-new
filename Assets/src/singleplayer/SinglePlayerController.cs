@@ -9,6 +9,7 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 	public GameObject transporter;
 	public GameObject ruleListContainer;
 	public GameObject loading;
+	public GameObject nextButton;
 
 	private Transporter _tr;
 	private JToken _responseToken = null;
@@ -50,7 +51,13 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 		while(_responseToken == null)
 			yield return null;
 		
+
+		/* Hide the loading gif */
+
 		loading.SetActive(false);
+
+
+		/* Render out the rules item */
 
 		JArray rms = (JArray)_responseToken;
 		RuleListContainer r = ruleListContainer.GetComponent<RuleListContainer> ();
@@ -62,16 +69,21 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 			r.addRule (ruleData);
 		}
 
+
+		/* activate the next button */
+
+		nextButton.SetActive(true);
+
 	}
 
 
 	public void receiveData(string dt)
 	{
+
 		JArray resArray = JArray.Parse (dt);
 		JToken response = resArray.First["response"];
 
 		_responseToken = response.SelectToken ("data");
-
 
 	}
 
