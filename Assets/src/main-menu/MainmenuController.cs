@@ -18,7 +18,7 @@ public class MainmenuController : MonoBehaviour {
 
 	public void singlePlayer()
 	{
-		SceneManager.LoadScene ("singl1");
+		SceneManager.LoadScene ("select");
 	}
 
 		public void join()
