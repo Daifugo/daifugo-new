@@ -61,6 +61,25 @@ public class RuleListContainer : MonoBehaviour {
 		ruleCount++;
 	}
 
+
+	public string getSelectedRules()
+	{
+		string rules = "";
+
+		for(int i = 0; i < selectedRules.Count;i++)
+		{
+
+			rules += selectedRules[i];
+
+			if(i != selectedRules.Count - 1)
+				rules += ", ";
+
+		}
+
+		return (rules == ""?null:rules);
+	}
+
+
 	void Start()
 	{
 		selectedRules = new List<string>();
