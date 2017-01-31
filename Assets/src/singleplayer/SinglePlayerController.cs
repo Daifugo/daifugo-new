@@ -7,9 +7,11 @@ using System.Collections.Generic;
 public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 
 	public GameObject transporter;
-	public RuleListContainer ruleList;
+	public GameObject ruleListContainer;
 
 	private Transporter _tr;
+	private JToken _responseToken = null;
+
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +21,10 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 
 		_tr.requestRules();
 
+
+		/* Start coroutine */
+
+		StartCoroutine(parseData());
 	}
 	
 	// Update is called once per frame
@@ -27,23 +33,38 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 	}
 
 
+
 	/* SocketConnectionInterface */
 
-	IEnumerator parseData(int code, JToken data)
+	IEnumerator parseData()
 	{
-		yield return null;
+
+		while(_responseToken == null)
+			yield return null;
+		
+		JArray rms = (JArray)_responseToken;
+		RuleListContainer r = ruleListContainer.GetComponent<RuleListContainer> ();
+
+		foreach (JToken s in rms) 
+		{
+			Dictionary<string,string> ruleData = s.ToObject<Dictionary<string,string>> ();
+			yield return new WaitForSeconds(1.4f);
+			r.addRule (ruleData);
+		}
+
 	}
+
 
 	public void receiveData(string dt)
 	{
 		JArray resArray = JArray.Parse (dt);
 		JToken response = resArray.First["response"];
 
-		JToken responseTkn = response.SelectToken ("data");
-		int responseCd = (int)response.SelectToken("code");
+		_responseToken = response.SelectToken ("data");
 
-		StartCoroutine(parseData(responseCd,responseTkn));
+
 	}
+
 
 	public void handleError()
 	{
