@@ -91,6 +91,11 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 	public void next()
 	{
 
+		RuleListContainer r = ruleListContainer.GetComponent<RuleListContainer> ();
+		string rules = r.getSelectedRules();
+		PlayerPrefs.SetString("rules",rules);
+		SceneManager.LoadScene ("avatar");
+		
 	}
 
 
