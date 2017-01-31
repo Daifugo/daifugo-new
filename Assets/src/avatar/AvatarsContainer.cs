@@ -73,4 +73,9 @@ public class AvatarsContainer : MonoBehaviour {
 
 	}
 
+	public int getIndexSelectedAvatar()
+	{
+		return _selectedAvatar.GetSiblingIndex ();
+	}
+
 }
