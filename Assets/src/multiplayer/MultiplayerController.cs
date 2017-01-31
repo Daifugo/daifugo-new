@@ -9,6 +9,7 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 	public GameObject transporter;
 	public GameObject roomList;
 	public GameObject nextButton;
+	public GameObject loading;
 
 	private Transporter _tr;
 	private JToken _responseToken = null;
@@ -16,10 +17,20 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 	// Use this for initialization
 	void Start () {
 
+		/* Request rooms from server */
+
 		_tr = transporter.GetComponent<Transporter>();
 		_tr.setSocketDelegate(this);
 
 		_tr.requestRooms();
+
+
+		/* show loading gif */
+
+		loading.SetActive(true);
+
+
+		/* Start coroutine */
 
 		StartCoroutine (parseData ());
 	}
@@ -38,6 +49,8 @@ public class MultiplayerController : MonoBehaviour, SocketConnectionInterface {
 
 		while(_responseToken == null)
 			yield return null;
+
+		loading.SetActive(false);
 
 		JArray rms = (JArray)_responseToken;
 		RoomListContainer r = roomList.GetComponent<RoomListContainer> ();
