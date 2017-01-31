@@ -8,6 +8,7 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 
 	public GameObject transporter;
 	public GameObject ruleListContainer;
+	public GameObject loading;
 
 	private Transporter _tr;
 	private JToken _responseToken = null;
@@ -16,15 +17,22 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 	// Use this for initialization
 	void Start () {
 
+
 		_tr = transporter.GetComponent<Transporter>();
 		_tr.setSocketDelegate(this);
 
 		_tr.requestRules();
 
 
+		/* show loading gif */
+
+		loading.SetActive(true);
+
+
 		/* Start coroutine */
 
 		StartCoroutine(parseData());
+
 	}
 	
 	// Update is called once per frame
@@ -42,6 +50,8 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 		while(_responseToken == null)
 			yield return null;
 		
+		loading.SetActive(false);
+
 		JArray rms = (JArray)_responseToken;
 		RuleListContainer r = ruleListContainer.GetComponent<RuleListContainer> ();
 
