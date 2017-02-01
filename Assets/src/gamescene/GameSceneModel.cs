@@ -5,10 +5,12 @@ using Newtonsoft.Json.Linq;
 
 public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
+	public GameObject controllerObject;
+	private GameSceneController _controller;
 
 	Transporter _transporter = null;
-	JToken _responseToken = null
-	int _responseCode = null;
+	JToken _responseToken = null;
+	int _responseCode = 0;
 
 
 	// Use this for initialization
@@ -18,6 +20,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		_transporter = GameObject.Find("Transporter").GetComponent<Transporter>();
 		_transporter.setSocketDelegate (this);
 
+		_controller = controllerObject.GetComponent<GameSceneController>();
 
 		/* send greet message to server */
 
@@ -27,6 +30,26 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 		_transporter.greetServer(userId);
 	}
+
+
+	IEnumerator parseData()
+	{
+
+		while(true)
+		{
+			while(_responseToken == null)
+				yield return null;
+
+
+			switch(_responseCode)
+			{
+
+			}
+			
+		}
+
+	}
+
 
 
 	public void receiveData(string dt)
