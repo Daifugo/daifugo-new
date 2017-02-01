@@ -43,13 +43,26 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 			switch(_responseCode)
 			{
-
+				case Constants.NEWPLAYER_CODE:
+					newPlayerHandler(_responseToken);
+				break;
 			}
-			
+
 		}
 
 	}
 
+
+	private void newPlayerHandler(JToken dt){
+		
+		JObject dataObject = (JObject)dt;
+
+		string userId = (string)dataObject.GetValue ("userId");
+		int photoId = (int) dataObject.GetValue ("photoId");
+
+		_controller.addPlayer(userId,photoId);
+
+	}	
 
 
 	public void receiveData(string dt)
