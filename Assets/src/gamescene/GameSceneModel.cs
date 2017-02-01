@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 
 	Transporter _transporter = null;
+	JToken _responseToken = null
+	int _responseCode = null;
 
 
 	// Use this for initialization
+
 	void Start () {
 	
 		_transporter = GameObject.Find("Transporter").GetComponent<Transporter>();
@@ -27,7 +31,11 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 	public void receiveData(string dt)
 	{
+		JArray resArray = JArray.Parse (dt);
+		JToken response = resArray.First["response"];
 
+		_responseToken = response.SelectToken ("data");
+		_responseCode = (int)response.SelectToken("code");
 	}
 
 
