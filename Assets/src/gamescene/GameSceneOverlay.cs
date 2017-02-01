@@ -23,7 +23,9 @@ public class GameSceneOverlay : MonoBehaviour {
 
 	void Start()
 	{
+		gameObject.GetComponent<Image>().enabled = true;
 		textComponent = stateText.GetComponent<Text>();
+		changeText();
 	}
 
 
