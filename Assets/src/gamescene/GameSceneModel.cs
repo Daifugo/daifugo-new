@@ -46,9 +46,24 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 				case Constants.NEWPLAYER_CODE:
 					newPlayerHandler(_responseToken);
 				break;
+
+				case Constants.STATE_CODE:
+					stateCodeHandler();
+				break;
 			}
 
 		}
+
+	}
+	
+	/* Code Handlers */
+
+	void stateCodeHandler(JToken dt)
+	{
+
+		JObject dataObject = (JObject)dt;
+		int state = (int)dataObject.GetValue (state);
+		_controller.setTextState(state);
 
 	}
 
@@ -63,6 +78,8 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		_controller.addPlayer(userId,photoId);
 
 	}	
+
+	/* End Code Handlers */
 
 
 	public void receiveData(string dt)
