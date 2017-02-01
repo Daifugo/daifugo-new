@@ -11,14 +11,19 @@ public class GameSceneController : MonoBehaviour {
 		
 		playerSpaces = GameObject.FindGameObjectsWithTag("player");
 
-		overlay.SetActive(true);
-		overlay.GetComponent<GameSceneOverlay>().changeText();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+
+	public void setTextState(int s)
+	{
+		overlay.GetComponent<GameSceneOverlay>().changeText(s);
+	}
+
 
 	public void addPlayer(string userid, int photoId)
 	{
