@@ -12,4 +12,6 @@ public static class Constants{
 	public const int JOINGAME_CODE = 107;
 	public const int STARTGAME_CODE = 114;
 
+	public const int STATE_CODE = 51;
+
 }
