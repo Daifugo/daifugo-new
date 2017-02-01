@@ -48,21 +48,21 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 				break;
 
 				case Constants.STATE_CODE:
-					stateCodeHandler();
+					stateCodeHandler(_responseToken);
 				break;
 			}
 
 		}
 
 	}
-	
+
 	/* Code Handlers */
 
 	void stateCodeHandler(JToken dt)
 	{
 
 		JObject dataObject = (JObject)dt;
-		int state = (int)dataObject.GetValue (state);
+		int state = (int)dataObject.GetValue ("state");
 		_controller.setTextState(state);
 
 	}
