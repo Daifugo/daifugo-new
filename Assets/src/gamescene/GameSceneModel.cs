@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
@@ -13,6 +14,14 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		_transporter = GameObject.Find("Transporter").GetComponent<Transporter>();
 		_transporter.setSocketDelegate (this);
 
+
+		/* send greet message to server */
+
+		Dictionary<string,object> userId = new Dictionary<string, object> {
+			{ "userId",PlayerPrefs.GetString ("userId") }
+		};
+
+		_transporter.greetServer(userId);
 	}
 
 
