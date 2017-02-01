@@ -52,4 +52,12 @@ public class Transporter : MonoBehaviour {
 		_socket.sendJSON(Constants.STARTGAME_CODE,dt);
 	}
 
+
+	/* Game Scene */
+
+	public void greetServer(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.GREET_CODE,dt);
+	}
+
 }
