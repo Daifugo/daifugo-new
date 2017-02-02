@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class AvatarsContainer : MonoBehaviour {
 
+	public GameObject controller;
 
 	private Transform _selectedAvatar = null;
 	private List<int> _selectedAvatars = null;
@@ -33,6 +34,12 @@ public class AvatarsContainer : MonoBehaviour {
 
 
 	/* Animation Event Callback */
+
+	public void finishAnim()
+	{
+		controller.GetComponent<AvatarSceneController>().showNextButton();
+	}
+
 
 	public void addClickHandlers()
 	{
