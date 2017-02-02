@@ -13,5 +13,6 @@ public static class Constants{
 	public const int STARTGAME_CODE = 114;
 
 	public const int STATE_CODE = 51;
+	public const int MULTIPLAYERTIME_CODE = 52;
 
 }
