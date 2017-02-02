@@ -49,7 +49,7 @@ public class Transporter : MonoBehaviour {
 
 	public void sendStartRequest(Dictionary<string,object> dt)
 	{
-		_socket.sendJSON(Constants.STARTGAME_CODE,dt);
+		_socket.sendJSON(Constants.LOBBYDETAILS_CODE,dt);
 	}
 
 
