@@ -50,6 +50,11 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 				case Constants.STATE_CODE:
 					stateCodeHandler(_responseToken);
 				break;
+
+				case Constants.MULTIPLAYERTIME_CODE:
+					multiplayerTimeHandler(_responseToken);
+				break;
+
 			}
 
 		}
@@ -57,6 +62,15 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+
+	void multiplayerTimeHandler(JToken dt)
+	{
+		JObject dataObject = (JObject)dt;
+		int time = (int)dataObject.GetValue ("time");
+		_controller.setTimer(time);
+	}
+
 
 	void stateCodeHandler(JToken dt)
 	{
