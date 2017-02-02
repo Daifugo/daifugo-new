@@ -20,7 +20,15 @@ public class GameSceneOverlay : MonoBehaviour {
 			break;
 
 			case 1:
-				textComponent.text = "Deploying CPU Bot..";
+				textComponent.text = "Deploying CPU Bot...";
+			break;
+
+			case 2:
+				textComponent.text = "Distributing Cards...";
+			break;
+
+			case 3:
+				textComponent.text = "Waiting for other players to join...";
 			break;
 		}
 	}
