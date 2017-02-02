@@ -10,6 +10,7 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 	public GameObject avatarContainer;
 	public GameObject overlay;
+	public GameObject nextButton;
 
 	Transporter _tr = null;
 	JToken _responseToken = null;
@@ -92,14 +93,16 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 	}
 
 
+	public void showNextButton()
+	{
+		nextButton.SetActive(true);
+	}
+
+
 	/* Button Handlers */
 
 	public void nextButtonHandler()
 	{
-		// Show loading overlay
-
-		overlay.SetActive(true);
-
 
 		// Send join/start request to server
 
