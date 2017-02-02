@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Threading;
 
 public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
@@ -9,16 +11,25 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	private GameSceneController _controller;
 
 	Transporter _transporter = null;
-	JToken _responseToken = null;
-	int _responseCode = 0;
+	Data _data = null;
+	Mutex _dataMutex = null;
 
+	List<Data> dataBuffer;
 
 	// Use this for initialization
 
 	void Start () {
 	
+		dataBuffer = new List<Data>();
+		_dataMutex = new Mutex();
+
+		/* Obtain transporter object */
+
 		_transporter = GameObject.Find("Transporter").GetComponent<Transporter>();
 		_transporter.setSocketDelegate (this);
+
+		/* end transporter object */
+
 
 		_controller = controllerObject.GetComponent<GameSceneController>();
 
@@ -41,34 +52,43 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 		while(true)
 		{
-			while(_responseToken == null)
+
+			while(dataBuffer.Count == 0)
 				yield return null;
 
-
-			switch(_responseCode)
+			
+			for(var i = 0;i < dataBuffer.Count;i++)
 			{
-				case Constants.NEWPLAYER_CODE:
-					newPlayerHandler(_responseToken);
-				break;
 
-				case Constants.STATE_CODE:
-					stateCodeHandler(_responseToken);
-				break;
+				_dataMutex.WaitOne();
 
-				case Constants.MULTIPLAYERTIME_CODE:
-					multiplayerTimeHandler(_responseToken);
-				break;
+				JToken d = dataBuffer[i].getData();
+				int code = dataBuffer[i].getCode();
 
+				switch(code)
+				{
+					case Constants.NEWPLAYER_CODE:
+						newPlayerHandler(d);
+					break;
+
+					case Constants.STATE_CODE:
+						yield return new WaitForSeconds(1.5f);
+						stateCodeHandler(d);
+					break;
+
+					case Constants.MULTIPLAYERTIME_CODE:
+						multiplayerTimeHandler(d);
+					break;
+
+				}
+
+				_dataMutex.ReleaseMutex();
 			}
 
-			_responseToken = null;
-
+			dataBuffer.Clear();
 		}
-
 	}
-
-	/* Code Handlers */
-
+	
 
 	void multiplayerTimeHandler(JToken dt)
 	{
@@ -108,8 +128,15 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		JArray resArray = JArray.Parse (dt);
 		JToken response = resArray.First["response"];
 
-		_responseToken = response.SelectToken ("data");
-		_responseCode = (int)response.SelectToken("code");
+		JToken responseToken = response.SelectToken ("data");
+		int responseCode = (int)response.SelectToken("code");
+
+		_dataMutex.WaitOne();
+
+		var d = new Data(responseCode,responseToken);
+		dataBuffer.Add(d);
+
+		_dataMutex.ReleaseMutex();
 	}
 
 
