@@ -25,6 +25,10 @@ public class Player : MonoBehaviour {
 		_isOccupied = true;
 	}
 
+	public string getId()
+	{
+		return this._userId;
+	}
 
 	private void setAvatar(int photoId)
 	{
@@ -34,6 +38,7 @@ public class Player : MonoBehaviour {
 		s.GetComponent<RectTransform>().offsetMin = Vector2.zero;
 		s.GetComponent<RectTransform>().sizeDelta = new Vector2(150.0f,150.0f);
 	}
+
 
 
 	// Use this for initialization
