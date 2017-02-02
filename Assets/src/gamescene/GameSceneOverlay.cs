@@ -5,6 +5,10 @@ using UnityEngine.UI;
 public class GameSceneOverlay : MonoBehaviour {
 
 	public GameObject stateText;
+	public GameObject time;
+	public GameObject parentTime;
+	public GameObject parentFooter;
+
 	Text textComponent = null;
 
 	public void changeText(int state = -1)
@@ -20,6 +24,23 @@ public class GameSceneOverlay : MonoBehaviour {
 			break;
 		}
 	}
+
+
+	public void changeTime(int timeInt)
+	{
+
+		if(!parentTime.activeInHierarchy)
+		{
+			parentFooter.SetActive(true);
+			parentTime.SetActive(true);
+		}
+
+		char[] splitChar = {' '};
+		Text timeTxt = time.GetComponent<Text>();
+		string[] splitTxt = timeTxt.text.Split(splitChar);
+		timeTxt.text = splitTxt + " " + timeInt.ToString();
+	}
+
 
 	void Start()
 	{
