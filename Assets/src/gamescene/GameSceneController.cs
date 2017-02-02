@@ -18,11 +18,21 @@ public class GameSceneController : MonoBehaviour {
 	
 	}
 
+	/* Overlay Functions */
+
 
 	public void setTextState(int s)
 	{
 		overlay.GetComponent<GameSceneOverlay>().changeText(s);
 	}
+
+	public void setTimer(int time)
+	{
+		overlay.GetComponent<GameSceneOverlay>().changeTime(time);
+	}
+
+
+	/* End Overlay Functions */
 
 
 	public void addPlayer(string userid, int photoId)
