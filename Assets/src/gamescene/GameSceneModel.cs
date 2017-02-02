@@ -29,6 +29,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		};
 
 		_transporter.greetServer(userId);
+
+		/* end send greet */
+
+		StartCoroutine(parseData());
 	}
 
 
@@ -57,6 +61,8 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 			}
 
+			_responseToken = null;
+
 		}
 
 	}
@@ -82,8 +88,9 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 
-	private void newPlayerHandler(JToken dt){
-		
+	private void newPlayerHandler(JToken dt)
+	{
+			
 		JObject dataObject = (JObject)dt;
 
 		string userId = (string)dataObject.GetValue ("userId");
