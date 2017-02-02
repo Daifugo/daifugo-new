@@ -103,6 +103,10 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 	public void nextButtonHandler()
 	{
+		// Show loading overlay
+
+		overlay.GetComponent<AvatarSceneOverlay>().show();
+
 
 		// Send join/start request to server
 
@@ -113,11 +117,13 @@ public class AvatarSceneController : MonoBehaviour,SocketConnectionInterface {
 
 		if(PlayerPrefs.HasKey("roomId"))
 		{
+			overlay.GetComponent<AvatarSceneOverlay>().showJoin();
 			d.Add("roomId",PlayerPrefs.GetString("roomId"));
 			_tr.sendJoinRequest (d);
 		}
 		else
 		{
+			overlay.GetComponent<AvatarSceneOverlay>().showStart();
 			d.Add("mode", PlayerPrefs.GetString("mode"));
 			d.Add("rules",PlayerPrefs.GetString("rules"));
 			_tr.sendStartRequest(d);
