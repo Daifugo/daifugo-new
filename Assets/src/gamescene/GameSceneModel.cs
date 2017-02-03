@@ -11,7 +11,6 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	private GameSceneController _controller;
 
 	Transporter _transporter = null;
-	Data _data = null;
 	Mutex _dataMutex = null;
 
 	List<Data> dataBuffer;
@@ -80,6 +79,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						multiplayerTimeHandler(d);
 					break;
 
+					case Constants.CARD_CODE:
+						cardCodeHandler(d);
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -88,7 +91,36 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 			dataBuffer.Clear();
 		}
 	}
-	
+
+	/* Code Handlers */
+
+	void cardCodeHandler(JToken dt)
+	{
+		JObject dataObject = (JObject)dt;
+		string Id = (string)dataObject.GetValue("userId");
+		JToken cardsToken = dataObject.GetValue("cards");
+
+		if(Id != PlayerPrefs.GetString ("userId"))
+		{
+			int cardCount = (int)cardsToken;
+			_controller.addCardCount(Id,cardCount);
+		}
+		else
+		{
+			JArray cards = (JArray)cardsToken;
+			foreach(var c in cards)
+			{
+				JObject cardObject = (JObject)c;
+
+				var suit = (int)cardObject.GetValue("_suit");
+				var rank = (int)cardObject.GetValue("_kind");
+
+				Card s = new Card(suit,rank);
+				_controller.addUserCard(s);
+			}
+		}
+	}
+
 
 	void multiplayerTimeHandler(JToken dt)
 	{
