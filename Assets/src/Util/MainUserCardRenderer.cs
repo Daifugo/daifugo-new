@@ -19,8 +19,7 @@ public class MainUserCardRenderer : MonoBehaviour {
 
 	public GameObject renderCard(Card s)
 	{
-		GameObject card = Resources.Load("prefabs/GameCard", typeof(GameObject)) as GameObject;
-		card = Instantiate (card, Vector3.zero, Quaternion.identity, transform) as GameObject;
+		GameObject card = getObject("GameCard");
 
 		card.GetComponent<GameCard>().addCard(s);
 
@@ -45,9 +44,8 @@ public class MainUserCardRenderer : MonoBehaviour {
 
 		foreach(var card in cards)
 		{
-
-			GameObject cardPrefab = Resources.Load("prefabs/maincard", typeof(GameObject)) as GameObject;
-			cardPrefab = Instantiate (cardPrefab, Vector3.zero, Quaternion.identity, transform) as GameObject;
+			
+			GameObject cardPrefab = getObject("maincard");
 
 			setDealtImage(cardPrefab, card.getSuit(),card.getRank());
 			setDealtGeometry(cardPrefab, xCoor);
@@ -57,6 +55,13 @@ public class MainUserCardRenderer : MonoBehaviour {
 			yield return new WaitForSeconds (0.9f);
 		}
 		
+	}
+
+
+	GameObject getObject(string prefabName)
+	{
+		GameObject cardPrefab = Resources.Load("prefabs/"+prefabName, typeof(GameObject)) as GameObject;
+		return Instantiate (cardPrefab, Vector3.zero, Quaternion.identity, transform) as GameObject;
 	}
 
 
