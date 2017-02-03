@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -28,6 +29,15 @@ public class Player : MonoBehaviour {
 	public string getId()
 	{
 		return this._userId;
+	}
+
+	public void setCardCount(int s)
+	{
+		char[] space = new char[]{' '};
+		Text txt = cardsCount.GetComponent<Text>(); 
+		string[] str = txt.text.Split(space);
+		txt.text = s.ToString() + " " + str[1];
+
 	}
 
 	private void setAvatar(int photoId)
