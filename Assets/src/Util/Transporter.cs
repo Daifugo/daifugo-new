@@ -60,4 +60,14 @@ public class Transporter : MonoBehaviour {
 		_socket.sendJSON(Constants.GREET_CODE,dt);
 	}
 
+	public void requestCards(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.CARD_CODE,dt);
+	}
+
+	public void requestTurn(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.TURN_CODE,dt);
+	}
+
 }
