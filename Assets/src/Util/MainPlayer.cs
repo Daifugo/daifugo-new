@@ -7,6 +7,8 @@ public class MainPlayer : MonoBehaviour {
 	public GameObject cardLocation;
 	public GameObject actions;
 
+	string _id = null;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -20,6 +22,16 @@ public class MainPlayer : MonoBehaviour {
 	public void buttonCardHandler(GameObject c)
 	{
 		c.GetComponent<GameCard>().selected();
+	}
+
+	public void setId(string id)
+	{
+		this._id = id;
+	}
+
+	public string getId()
+	{
+		return this._id;
 	}
 
 	public void addCard(Card s)
