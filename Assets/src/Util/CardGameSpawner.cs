@@ -30,4 +30,30 @@ public class CardGameSpawner{
 		}
 	}
 
+
+	private Dictionary<int,string> getDictionaryForKey(int key)
+	{
+
+		if (key == 1) 
+		{
+			return _heartSuit;
+		} 
+		else if (key == 2)
+		{
+			return _clubSuit;
+		}
+		else if (key == 3)
+		{
+			return _diamondSuit;
+		} 
+		else if (key == 4) 
+		{
+			return _spadesSuit;
+		}
+
+		return null;
+	}
+
+
+
 }
