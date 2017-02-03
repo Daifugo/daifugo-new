@@ -8,6 +8,7 @@ public class MainPlayer : MonoBehaviour {
 	public GameObject actions;
 
 	string _id = null;
+	bool _hasTurn = false;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +33,12 @@ public class MainPlayer : MonoBehaviour {
 	public string getId()
 	{
 		return this._id;
+	}
+
+	public void toggleTurn()
+	{
+		_hasTurn = !_hasTurn;
+		actions.SetActive(_hasTurn);
 	}
 
 	public void addCard(Card s)
