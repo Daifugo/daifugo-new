@@ -14,6 +14,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	Mutex _dataMutex = null;
 
 	List<Data> dataBuffer;
+	Dictionary<string,object> _userId;
 
 	// Use this for initialization
 
@@ -34,11 +35,11 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 		/* send greet message to server */
 
-		Dictionary<string,object> userId = new Dictionary<string, object> {
+		_userId = new Dictionary<string, object> {
 			{ "userId",PlayerPrefs.GetString ("userId") }
 		};
 
-		_transporter.greetServer(userId);
+		_transporter.greetServer(_userId);
 
 		/* end send greet */
 
@@ -67,7 +68,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 				switch(code)
 				{
 					case Constants.NEWPLAYER_CODE:
-						newPlayerHandler(d);
+						StartCoroutine(newPlayerHandler(d));
 					break;
 
 					case Constants.STATE_CODE:
@@ -80,7 +81,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 					break;
 
 					case Constants.CARD_CODE:
-						cardCodeHandler(d);
+						StartCoroutine(cardCodeHandler(d));
 					break;
 
 				}
@@ -94,7 +95,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 	/* Code Handlers */
 
-	void cardCodeHandler(JToken dt)
+	IEnumerator cardCodeHandler(JToken dt)
 	{
 		JObject dataObject = (JObject)dt;
 		string Id = (string)dataObject.GetValue("userId");
@@ -117,8 +118,14 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 				Card s = new Card(suit,rank);
 				_controller.addUserCard(s);
+				yield return new WaitForSeconds(1.2f);
 			}
+
+			_transporter.requestTurn(_userId);
+
 		}
+
+		yield return null;
 	}
 
 
@@ -140,15 +147,26 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 
-	private void newPlayerHandler(JToken dt)
+	IEnumerator newPlayerHandler(JToken dt)
 	{
 			
-		JObject dataObject = (JObject)dt;
+		JArray plArray = (JArray)dt;
 
-		string userId = (string)dataObject.GetValue ("userId");
-		int photoId = (int) dataObject.GetValue ("photoId");
+		for(int i =0;i < plArray.Count;i++)
+		{
+			JObject dataObject = (JObject)plArray[i];
 
-		_controller.addPlayer(userId,photoId);
+			string userId = (string)dataObject.GetValue ("userId");
+			int photoId = (int) dataObject.GetValue ("photoId");
+
+			_controller.addPlayer(userId,photoId);
+
+			if(i != plArray.Count -1)
+				yield return new WaitForSeconds(1.2f);
+		}
+
+		_transporter.requestCards(_userId);
+		yield return null;
 
 	}	
 
