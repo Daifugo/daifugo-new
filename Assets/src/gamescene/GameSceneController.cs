@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class GameSceneController : MonoBehaviour {
 
 	GameObject[] playerSpaces = null;
+	public GameObject mainPlayer;
 
 	public GameObject overlay;
 
@@ -55,6 +56,11 @@ public class GameSceneController : MonoBehaviour {
 			counter++;
 		}
 
+	}
+
+	public void addUserCard(Card s)
+	{
+		mainPlayer.GetComponent<MainPlayer>().addCard(s);
 	}
 
 	public void addCardCount(string id, int count)
