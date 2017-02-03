@@ -30,6 +30,10 @@ public class GameSceneOverlay : MonoBehaviour {
 			case 3:
 				textComponent.text = "Waiting for other players to join...";
 			break;
+
+			case 4:
+				textComponent.text = "Start Game...";
+			break;
 		}
 	}
 
