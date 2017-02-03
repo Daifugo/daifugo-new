@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameSceneController : MonoBehaviour {
 
@@ -54,6 +55,13 @@ public class GameSceneController : MonoBehaviour {
 			counter++;
 		}
 
+	}
+
+	public void addCardCount(string id, int count)
+	{
+		List<GameObject> list = new List<GameObject>(playerSpaces);
+		GameObject b = list.Find(x => x.GetComponent<Player>().getId() == id);
+		b.GetComponent<Player>().setCardCount(count);
 	}
 
 
