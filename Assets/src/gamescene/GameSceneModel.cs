@@ -30,9 +30,6 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 		/* end transporter object */
 
-
-		_controller = controllerObject.GetComponent<GameSceneController>();
-
 		/* send greet message to server */
 
 		_userId = new Dictionary<string, object> {
@@ -42,6 +39,9 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		_transporter.greetServer(_userId);
 
 		/* end send greet */
+
+		_controller = controllerObject.GetComponent<GameSceneController>();
+		_controller.setMainUserId(PlayerPrefs.GetString ("userId"));
 
 		StartCoroutine(parseData());
 	}
@@ -84,6 +84,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						StartCoroutine(cardCodeHandler(d));
 					break;
 
+					case Constants.TURN_CODE:
+						turnCodeHandler(d);
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -94,6 +98,15 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+	void turnCodeHandler(JToken dt)
+	{
+		JObject dataObject = (JObject)dt;
+		string Id = (string)dataObject.GetValue("userId");
+		// int photoId = (int)dataObject.GetValue("photoId");
+
+		_controller.switchTurn(Id,0);
+	}
 
 	IEnumerator cardCodeHandler(JToken dt)
 	{
@@ -118,7 +131,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 				Card s = new Card(suit,rank);
 				_controller.addUserCard(s);
-				yield return new WaitForSeconds(1.2f);
+				yield return new WaitForSeconds(0.9f);
 			}
 
 			_transporter.requestTurn(_userId);
