@@ -2,11 +2,13 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class MainPlayer : MonoBehaviour {
 
 	public GameObject cardLocation;
 	public GameObject actions;
+	public GameObject dealtCard;
 
 	string _id = null;
 	bool _hasTurn = false;
@@ -25,7 +27,7 @@ public class MainPlayer : MonoBehaviour {
 	
 	}
 
-
+	/* accessors of _id */
 
 	public void setId(string id)
 	{
@@ -37,11 +39,16 @@ public class MainPlayer : MonoBehaviour {
 		return this._id;
 	}
 
+	/* end accessor */
+
 	public void toggleTurn()
 	{
 		_hasTurn = !_hasTurn;
 		actions.SetActive(_hasTurn);
 	}
+
+
+	/* handler for card owned */
 
 	public void buttonCardHandler(GameObject c)
 	{
@@ -59,6 +66,10 @@ public class MainPlayer : MonoBehaviour {
 		c.GetComponent<GameCard>().toggleSelected();
 	}
 
+	/* end handler */
+
+	/* Render cards */
+
 	public void addCard(Card s)
 	{
 		GameObject c = cardLocation.GetComponent<MainUserCardRenderer>().renderCard(s);
@@ -66,5 +77,19 @@ public class MainPlayer : MonoBehaviour {
 			buttonCardHandler(c);
 		});
 	}
+
+	/* end render */
+
+	/* Button action handlers */
+
+	public void dealCardHandler()
+	{
+		_selectedCards.Clear();
+		var socket = (GameObject.Find("SocketConn")).GetComponent<SocketConnection> ();
+		var converted = _selectedCards.Select(elem => elem.getCard().getDictionary());
+		socket.sendSelectedCards(_id,converted.ToArray());
+	}
+
+	/* End Button action handlers */
 
 }
