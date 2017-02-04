@@ -78,6 +78,17 @@ public class MainPlayer : MonoBehaviour {
 		});
 	}
 
+	public void renderDealt(Card[] s)
+	{
+		actions.SetActive(false);
+		dealtCard.GetComponent<MainUserCardRenderer>().renderDealt(s);
+	}
+
+	public void requestRemove(Card s)
+	{
+		cardLocation.GetComponent<MainUserCardRenderer>().removeCard(s);
+	}
+
 	/* end render */
 
 	/* Button action handlers */
