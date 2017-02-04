@@ -88,6 +88,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						turnCodeHandler(d);
 					break;
 
+					case Constants.MOVE_CODE:
+						moveCodeHandler(d);
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -98,6 +102,31 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+	void moveCodeHandler(JToken dt)
+	{
+		JObject dataObject = (JObject)dt;
+
+		string Id = (string)dataObject.GetValue("userId");
+		JArray dealtCards = (JArray)dataObject.GetValue("cards");
+
+		Card[] cards = new Card[dealtCards.Count];
+
+		for(int i = 0;i < cards.Length;i++)
+		{
+			JObject cardObject = (JObject)dealtCards[i];
+
+			var suit = (int)cardObject.GetValue("_suit");
+			var rank = (int)cardObject.GetValue("_kind");
+
+			Card s = new Card(suit,rank);
+			cards[i] = s;
+		}
+
+		_controller.renderDealtCard(Id,cards);
+
+	}
+
 
 	void turnCodeHandler(JToken dt)
 	{
