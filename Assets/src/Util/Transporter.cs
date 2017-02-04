@@ -75,4 +75,9 @@ public class Transporter : MonoBehaviour {
 		_socket.sendJSON(Constants.MOVE_CODE, dt);
 	}
 
+	public void sendPassTurn(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.PASSTURN_CODE, dt);
+	}
+
 }
