@@ -9,6 +9,10 @@ public class GameSceneOverlay : MonoBehaviour {
 	public GameObject parentTime;
 	public GameObject parentFooter;
 
+	public GameObject playerPassedTurn;
+	public GameObject MainPlayerPassedTurn;
+	public GameObject playerTurn;
+
 	Text textComponent = null;
 
 	public void changeText(int state = -1)
@@ -33,10 +37,10 @@ public class GameSceneOverlay : MonoBehaviour {
 
 			case 4:
 				textComponent.text = "Start Game...";
+				stateText.SetActive(false);
 			break;
 		}
 	}
-
 
 	public void changeTime(int timeInt)
 	{
