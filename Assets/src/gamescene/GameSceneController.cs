@@ -65,6 +65,24 @@ public class GameSceneController : MonoBehaviour {
 		mainPlayer.GetComponent<MainPlayer>().setId(s);
 	}
 
+
+	public void renderDealtCard(string userId, Card[] s)
+	{
+		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
+
+		if(main.getId() == userId)
+		{
+			mainPlayer.GetComponent<MainPlayer>().renderDealt(s);
+		}
+		else
+		{
+			// List<GameObject> list = new List<GameObject>(playerSpaces);
+			// GameObject b = list.Find(x => x.GetComponent<Player>().getId() == s);
+			// b.GetComponent<Player>().toggleTurn();
+		}
+	}
+	
+
 	public void addUserCard(Card s)
 	{
 		mainPlayer.GetComponent<MainPlayer>().addCard(s);
