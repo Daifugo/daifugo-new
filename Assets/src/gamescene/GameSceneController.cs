@@ -9,6 +9,8 @@ public class GameSceneController : MonoBehaviour {
 
 	public GameObject overlay;
 
+	private GameObject playerWithTurn = null;
+
 	void Start () {
 		
 		playerSpaces = GameObject.FindGameObjectsWithTag("player");
@@ -62,6 +64,23 @@ public class GameSceneController : MonoBehaviour {
 	{
 		mainPlayer.GetComponent<MainPlayer>().addCard(s);
 	}
+
+	public void switchTurn(string s, int photoID)
+	{
+		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
+
+		if(main.getId() == s)
+		{
+			mainPlayer.GetComponent<MainPlayer>().toggleTurn();
+		}
+		else
+		{
+			List<GameObject> list = new List<GameObject>(playerSpaces);
+			GameObject b = list.Find(x => x.GetComponent<Player>().getId() == s);
+			b.GetComponent<Player>().toggleTurn();
+		}
+	}
+
 
 	public void addCardCount(string id, int count)
 	{
