@@ -10,6 +10,7 @@ public class MainPlayer : MonoBehaviour {
 	public GameObject actions;
 	public GameObject dealtCard;
 
+	Transporter _transport = null;
 	string _id = null;
 	bool _hasTurn = false;
 	List<GameCard> _selectedCards = null;
@@ -18,6 +19,7 @@ public class MainPlayer : MonoBehaviour {
 
 	void Start () {
 
+		_transport = (GameObject.Find("Transporter")).GetComponent<Transporter> ();
 		_selectedCards = new List<GameCard>();
 
 	}
@@ -95,11 +97,18 @@ public class MainPlayer : MonoBehaviour {
 
 	public void dealCardHandler()
 	{
-		_selectedCards.Clear();
-		var socket = (GameObject.Find("SocketConn")).GetComponent<SocketConnection> ();
 		var converted = _selectedCards.Select(elem => elem.getCard().getDictionary());
-		socket.sendSelectedCards(_id,converted.ToArray());
+
+		var obj = new Dictionary<string,object>();
+		obj.Add("userId",_id);
+		obj.Add("cards",converted.ToArray());
+
+
+		_transport.sendPlayerMove(obj);
+		_selectedCards.Clear();
 	}
+
+
 
 	/* End Button action handlers */
 
