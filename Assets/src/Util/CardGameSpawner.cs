@@ -36,14 +36,13 @@ public class CardGameSpawner{
 		string imageName = null;
 		Dictionary <int,string> g = getDictionaryForKey (suit);
 
-		if (g != null) {
+		if (g != null)
 			g.TryGetValue(rank, out imageName);
-		}
 			
-		Texture2D tex = Resources.Load ("images/cards/"+ getFolderNameForKey(suit) + "/" + imageName, typeof(Texture2D)) as Texture2D;
-		Sprite x = Sprite.Create (tex, new Rect (0, 0,tex.width, tex.height), new Vector2 (0.0f, 0.0f));
+		string path = "cards/" + getFolderNameForKey(suit) + "/" + imageName;
+		Sprite sprite = Util.getSprite(path);
 
-		return x;
+		return sprite;
 	}
 
 
