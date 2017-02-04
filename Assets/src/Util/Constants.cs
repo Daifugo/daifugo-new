@@ -16,6 +16,7 @@ public static class Constants{
 	public const int STATE_CODE = 51;
 	public const int MULTIPLAYERTIME_CODE = 52;
 	public const int TURN_CODE = 53;
+	public const int PASSTURN_CODE = 54;
 	public const int MOVE_CODE = 103;
 
 }
