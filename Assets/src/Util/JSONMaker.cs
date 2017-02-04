@@ -27,9 +27,18 @@ public static class JSONMaker{
 			writer.WritePropertyName ("data");
 			writer.WriteStartObject ();
 
-			foreach (KeyValuePair<string, object> d in data) {
+			foreach (KeyValuePair<string, object> d in data) 
+			{
 				writer.WritePropertyName (d.Key);
-				writer.WriteValue (d.Value);
+
+				if(d.Value.GetType() == typeof(Dictionary<string,int>[]))
+				{
+					makeIntArray(writer,d.Value);
+				}
+				else
+				{
+					writer.WriteValue (d.Value);
+				}
 			}
 
 			writer.WriteEndObject ();
@@ -41,45 +50,25 @@ public static class JSONMaker{
 	}
 
 
-	public static string makeJSONArray(Dictionary<string,object> jsonDetails, Dictionary<string,int>[] data){
+	static void makeIntArray(JsonWriter w, object data)
+	{
+		w.WriteStartArray ();
 
-		StringBuilder sb = new StringBuilder ();
-		StringWriter sw = new StringWriter (sb);
-		JsonWriter writer = new JsonTextWriter (sw);
-		writer.Formatting = Formatting.Indented;
+		var m = (Dictionary<string,int>[])data;
 
-
-		writer.WriteStartObject ();
-
-
-		/*  write heading of json  */
-
-		foreach (KeyValuePair<string, object> it in jsonDetails) {
-			writer.WritePropertyName (it.Key);
-			writer.WriteValue (it.Value);
-		}
-
-
-		/*  write data of json  */
-
-		writer.WritePropertyName ("data");
-		writer.WriteStartArray ();
-
-		foreach (Dictionary<string,int> d in data) {
-			
-			writer.WriteStartObject ();
+		foreach (Dictionary<string,int> d in m) 
+		{
+			w.WriteStartObject ();
 		
-			foreach (KeyValuePair<string, int> it in d) {
-				writer.WritePropertyName (it.Key);
-				writer.WriteValue (it.Value);
+			foreach (KeyValuePair<string, int> it in d) 
+			{
+				w.WritePropertyName (it.Key);
+				w.WriteValue (it.Value);
 			}
 				
-			writer.WriteEndObject ();
+			w.WriteEndObject ();
 		}
 
-
-		writer.WriteEndArray ();
-		writer.WriteEndObject ();
-		return sw.ToString ();
+		w.WriteEndArray ();
 	}
 }
