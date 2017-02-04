@@ -93,6 +93,13 @@ public class MainPlayer : MonoBehaviour {
 		cardLocation.GetComponent<OwnedCardRenderer>().removeCard(s);
 	}
 
+
+	public void endDistribute()
+	{
+		var obj = getDictionary();
+		_transport.requestTurn(obj);
+	}
+
 	/* end */
 
 	/* end render */
