@@ -39,4 +39,47 @@ public static class JSONMaker{
 
 		return sw.ToString ();
 	}
+
+
+	public static string makeJSONArray(Dictionary<string,object> jsonDetails, Dictionary<string,int>[] data){
+
+		StringBuilder sb = new StringBuilder ();
+		StringWriter sw = new StringWriter (sb);
+		JsonWriter writer = new JsonTextWriter (sw);
+		writer.Formatting = Formatting.Indented;
+
+
+		writer.WriteStartObject ();
+
+
+		/*  write heading of json  */
+
+		foreach (KeyValuePair<string, object> it in jsonDetails) {
+			writer.WritePropertyName (it.Key);
+			writer.WriteValue (it.Value);
+		}
+
+
+		/*  write data of json  */
+
+		writer.WritePropertyName ("data");
+		writer.WriteStartArray ();
+
+		foreach (Dictionary<string,int> d in data) {
+			
+			writer.WriteStartObject ();
+		
+			foreach (KeyValuePair<string, int> it in d) {
+				writer.WritePropertyName (it.Key);
+				writer.WriteValue (it.Value);
+			}
+				
+			writer.WriteEndObject ();
+		}
+
+
+		writer.WriteEndArray ();
+		writer.WriteEndObject ();
+		return sw.ToString ();
+	}
 }
