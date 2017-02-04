@@ -60,6 +60,11 @@ public class GameSceneController : MonoBehaviour {
 
 	}
 
+	public void setMainUserId(string s)
+	{
+		mainPlayer.GetComponent<MainPlayer>().setId(s);
+	}
+
 	public void addUserCard(Card s)
 	{
 		mainPlayer.GetComponent<MainPlayer>().addCard(s);
