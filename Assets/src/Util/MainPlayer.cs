@@ -74,7 +74,7 @@ public class MainPlayer : MonoBehaviour {
 
 	public void addCard(Card s)
 	{
-		GameObject c = cardLocation.GetComponent<MainUserCardRenderer>().renderCard(s);
+		GameObject c = cardLocation.GetComponent<OwnedCardRenderer>().render(s);
 		c.GetComponent<GameCard>().addHandler(delegate{
 			buttonCardHandler(c);
 		});
@@ -83,13 +83,17 @@ public class MainPlayer : MonoBehaviour {
 	public void renderDealt(Card[] s)
 	{
 		actions.SetActive(false);
-		dealtCard.GetComponent<MainUserCardRenderer>().renderDealt(s);
+		dealtCard.GetComponent<DealtCardRenderer>().render(s);
 	}
+
+	/* called from child object */
 
 	public void requestRemove(Card s)
 	{
-		cardLocation.GetComponent<MainUserCardRenderer>().removeCard(s);
+		cardLocation.GetComponent<OwnedCardRenderer>().removeCard(s);
 	}
+
+	/* end */
 
 	/* end render */
 
@@ -99,10 +103,8 @@ public class MainPlayer : MonoBehaviour {
 	{
 		var converted = _selectedCards.Select(elem => elem.getCard().getDictionary());
 
-		var obj = new Dictionary<string,object>();
-		obj.Add("userId",_id);
+		var obj = getDictionary();
 		obj.Add("cards",converted.ToArray());
-
 
 		_transport.sendPlayerMove(obj);
 		_selectedCards.Clear();
@@ -111,13 +113,19 @@ public class MainPlayer : MonoBehaviour {
 
 	public void passTurn()
 	{
-		var obj = new Dictionary<string,object>();
-		obj.Add("userId",_id);
-
+		var obj = getDictionary();
 		_transport.sendPassTurn(obj);
 		_selectedCards.Clear();
 	}
 
 	/* End Button action handlers */
+
+	Dictionary<string,object> getDictionary()
+	{
+		var obj = new Dictionary<string,object>();
+		obj.Add("userId",_id);
+
+		return obj;
+	}
 
 }
