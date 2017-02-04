@@ -109,6 +109,14 @@ public class MainPlayer : MonoBehaviour {
 	}
 
 
+	public void passTurn()
+	{
+		var obj = new Dictionary<string,object>();
+		obj.Add("userId",_id);
+
+		_transport.sendPassTurn(obj);
+		_selectedCards.Clear();
+	}
 
 	/* End Button action handlers */
 
