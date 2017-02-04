@@ -70,4 +70,9 @@ public class Transporter : MonoBehaviour {
 		_socket.sendJSON(Constants.TURN_CODE,dt);
 	}
 
+	public void sendPlayerMove(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.MOVE_CODE, dt);
+	}
+
 }
