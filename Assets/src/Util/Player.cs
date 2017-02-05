@@ -49,6 +49,11 @@ public class Player : MonoBehaviour {
 		s.GetComponent<RectTransform>().sizeDelta = new Vector2(150.0f,150.0f);
 	}
 
+	public void toggleTurn()
+	{
+		
+	}
+
 
 
 	// Use this for initialization
