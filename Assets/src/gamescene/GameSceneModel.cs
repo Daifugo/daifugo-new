@@ -164,10 +164,20 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	void turnCodeHandler(JToken dt)
 	{
 		JObject dataObject = (JObject)dt;
-		string Id = (string)dataObject.GetValue("userId");
-		int photoId = (int)dataObject.GetValue("photoId");
 
-		_controller.switchTurn(Id,photoId);
+		string prevId = null;
+		string Id = null;
+		int photoId = 0;
+
+		try
+		{
+			Id = (string)dataObject.GetValue("userId");
+			prevId = (string)dataObject.GetValue("prevTurnId");
+			photoId = (int)dataObject.GetValue("photoId");
+		}
+		catch{}
+
+		_controller.switchTurn(Id,photoId,prevId);
 	}
 
 	IEnumerator cardCodeHandler(JToken dt)
