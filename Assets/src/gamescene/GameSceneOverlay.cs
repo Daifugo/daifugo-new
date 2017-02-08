@@ -12,6 +12,7 @@ public class GameSceneOverlay : MonoBehaviour {
 	public GameObject playerPassedTurn;
 	public GameObject mainPlayerPassedTurn;
 	public GameObject playerTurn;
+	public GameObject mainPlayerTurn;
 
 	Text textComponent = null;
 
@@ -53,6 +54,20 @@ public class GameSceneOverlay : MonoBehaviour {
 		else
 		{
 			playerPassedTurn.GetComponent<PlayerTurnView>().show(photoId, true);
+		}
+	}
+
+	public void showTurn(bool isMainPlayer, int photoId)
+	{
+		gameObject.SetActive(true);
+
+		if(isMainPlayer)
+		{
+			mainPlayerTurn.GetComponent<MainPlayerTurnview>().show(false);
+		}
+		else
+		{
+			playerTurn.GetComponent<PlayerTurnView>().show(photoId, false);
 		}
 	}
 
