@@ -96,6 +96,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						passTurnHandler(d);
 					break;
 
+					case Constants.INVALIDMOVE_CODE:
+						invalidMoveHandler();
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -106,6 +110,11 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+	void invalidMoveHandler()
+	{
+		_controller.showInvalidMove();
+	}
 
 	void passTurnHandler(JToken dt)
 	{
