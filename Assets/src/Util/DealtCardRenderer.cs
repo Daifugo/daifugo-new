@@ -38,9 +38,6 @@ public class DealtCardRenderer : CardRenderer {
 
 			yield return new WaitForSeconds (0.9f);
 		}
-
-		if(MainPlayer != null)
-			MainPlayer.endDistribute();
 	}
 
 
