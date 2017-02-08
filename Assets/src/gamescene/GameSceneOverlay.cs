@@ -14,6 +14,8 @@ public class GameSceneOverlay : MonoBehaviour {
 	public GameObject playerTurn;
 	public GameObject mainPlayerTurn;
 
+	public GameObject invalidMove;
+
 	Text textComponent = null;
 
 	public void changeText(int state = -1)
@@ -43,6 +45,7 @@ public class GameSceneOverlay : MonoBehaviour {
 		}
 	}
 
+
 	public void showPassedTurn(bool isMainPlayer, int photoId)
 	{
 		gameObject.SetActive(true);
@@ -57,6 +60,7 @@ public class GameSceneOverlay : MonoBehaviour {
 		}
 	}
 
+
 	public void showTurn(bool isMainPlayer, int photoId)
 	{
 		gameObject.SetActive(true);
@@ -69,6 +73,14 @@ public class GameSceneOverlay : MonoBehaviour {
 		{
 			playerTurn.GetComponent<PlayerTurnView>().show(photoId, false);
 		}
+	}
+
+
+	public void showInvalid()
+	{
+		gameObject.SetActive(true);
+		invalidMove.SetActive(true);
+		invalidMove.GetComponent<Animator>().SetBool("show",true);
 	}
 
 
