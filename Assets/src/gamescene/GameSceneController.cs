@@ -75,9 +75,9 @@ public class GameSceneController : MonoBehaviour {
 		}
 		else
 		{
-			// List<GameObject> list = new List<GameObject>(playerSpaces);
-			// GameObject b = list.Find(x => x.GetComponent<Player>().getId() == s);
-			// b.GetComponent<Player>().toggleTurn();
+			List<GameObject> list = new List<GameObject>(playerSpaces);
+			GameObject b = list.Find(x => x.GetComponent<Player>().getId() == userId);
+			b.GetComponent<Player>().showCard(s);
 		}
 	}
 	
