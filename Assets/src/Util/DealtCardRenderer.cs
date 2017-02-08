@@ -26,7 +26,8 @@ public class DealtCardRenderer : CardRenderer {
 
 		foreach(var card in cards)
 		{
-			MainPlayer.requestRemove(card);
+			if(MainPlayer != null)
+				MainPlayer.requestRemove(card);
 
 			GameObject cardPrefab = getObject("maincard");
 
@@ -37,8 +38,9 @@ public class DealtCardRenderer : CardRenderer {
 
 			yield return new WaitForSeconds (0.9f);
 		}
-		
-		MainPlayer.endDistribute();
+
+		if(MainPlayer != null)
+			MainPlayer.endDistribute();
 	}
 
 
@@ -83,7 +85,8 @@ public class DealtCardRenderer : CardRenderer {
 
 	public override void removeCard(Card s)
 	{
-
+		foreach(Transform child in transform)
+			Destroy(child.gameObject);
 	}
 
 	// Use this for initialization
