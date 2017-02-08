@@ -124,6 +124,15 @@ public class GameSceneController : MonoBehaviour {
 		overlayScript.showInvalid();
 	}
 
+	public void deleteDealt(string userId)
+	{
+		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
+		if(main.getId() == userId)
+		{
+			main.deleteDealt();
+		}
+	}
+
 
 	public void addCardCount(string id, int count)
 	{
