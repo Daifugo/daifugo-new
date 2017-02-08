@@ -100,6 +100,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						invalidMoveHandler();
 					break;
 
+					case Constants.DELETEDEALT_CODE:
+						deleteDealtHandler(d);
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -110,6 +114,13 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+	void deleteDealtHandler(JToken data)
+	{
+		JObject dataObject = (JObject)data;
+		string Id = (string)dataObject.GetValue("userId");
+		_controller.deleteDealt(Id);
+	}
 
 	void invalidMoveHandler()
 	{
