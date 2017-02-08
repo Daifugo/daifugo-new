@@ -8,6 +8,8 @@ public class Player : MonoBehaviour {
 	public GameObject cardsCount;
 	public GameObject parent;
 
+	public GameObject cardRenderTop;
+
 
 	bool _isOccupied = false;
 	string _userId = null;
@@ -54,6 +56,26 @@ public class Player : MonoBehaviour {
 		
 	}
 
+	public void showCard(Card[] s)
+	{
+		PlayerRightCardRenderer c = cardRenderTop.GetComponent<PlayerRightCardRenderer>();
+		PlayerLeftCardRenderer x = cardRenderTop.GetComponent<PlayerLeftCardRenderer>();
+		DealtCardRenderer m = cardRenderTop.GetComponent<DealtCardRenderer>();
+
+		if(c == null && x == null)
+		{
+			m.render(s);
+		}
+		else if(c == null && m == null)
+		{
+			x.render(s);
+		}
+		else if(x == null && m == null)
+		{
+			c.render(s);
+		}
+
+	}
 
 
 	// Use this for initialization
