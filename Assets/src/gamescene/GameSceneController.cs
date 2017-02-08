@@ -110,6 +110,14 @@ public class GameSceneController : MonoBehaviour {
 		}
 	}
 
+	public void showPassedTurn(string Id, int photoId)
+	{
+		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
+		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
+
+		overlayScript.showPassedTurn(main.getId() == Id, photoId);
+	}
+
 	public void showInvalidMove()
 	{
 		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
