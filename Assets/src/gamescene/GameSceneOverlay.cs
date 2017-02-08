@@ -10,7 +10,7 @@ public class GameSceneOverlay : MonoBehaviour {
 	public GameObject parentFooter;
 
 	public GameObject playerPassedTurn;
-	public GameObject MainPlayerPassedTurn;
+	public GameObject mainPlayerPassedTurn;
 	public GameObject playerTurn;
 
 	Text textComponent = null;
@@ -42,41 +42,18 @@ public class GameSceneOverlay : MonoBehaviour {
 		}
 	}
 
-
 	public void showPassedTurn(bool isMainPlayer, int photoId)
 	{
 		gameObject.SetActive(true);
 
 		if(isMainPlayer)
 		{
-			MainPlayerPassedTurn.SetActive(true);
-			MainPlayerPassedTurn.GetComponent<Animator>().SetBool("show",true);
+			mainPlayerPassedTurn.GetComponent<MainPlayerTurnview>().show(true);
 		}
 		else
 		{
-			playerPassedTurn.SetActive(true);
-
-			var avatar = returnAvatar(photoId+1, playerPassedTurn.transform);
-			avatar.GetComponent<Animator>().SetBool("show",true);
-
-			playerPassedTurn.GetComponent<Animator>().SetBool("show",true);
+			playerPassedTurn.GetComponent<PlayerTurnView>().show(photoId, true);
 		}
-	}
-
-
-	GameObject returnAvatar(int photoId, Transform parent)
-	{
-		var avatar1 = Resources.Load("prefabs/overlayAvatar", typeof(GameObject)) as GameObject;
-		var avatar = Instantiate (avatar1, Vector3.zero, Quaternion.identity) as GameObject;	
-
-		avatar.transform.SetParent(parent);
-
-		avatar.GetComponent<Image>().sprite = Util.getSprite("overlay/ava" + photoId);
-
-		var rect = avatar.GetComponent<RectTransform>();
-		rect.anchoredPosition = new Vector2(66.0f,0.0f);
-			
-		return avatar;
 	}
 
 
