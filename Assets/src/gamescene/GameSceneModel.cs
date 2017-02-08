@@ -72,7 +72,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 					break;
 
 					case Constants.STATE_CODE:
-						yield return new WaitForSeconds(1.5f);
+						yield return new WaitForSeconds(1.0f);
 						stateCodeHandler(d);
 					break;
 
@@ -92,6 +92,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						moveCodeHandler(d);
 					break;
 
+					case Constants.PASSTURN_CODE:
+						passTurnHandler(d);
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -102,6 +106,15 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+	void passTurnHandler(JToken dt)
+	{
+		JObject dataObject = (JObject)dt;
+		string Id = (string)dataObject.GetValue("userId");
+		int photoId = (int)dataObject.GetValue("photoId");
+
+		_controller.showPassedTurn(Id,photoId);
+	}
 
 	void moveCodeHandler(JToken dt)
 	{
@@ -132,9 +145,9 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	{
 		JObject dataObject = (JObject)dt;
 		string Id = (string)dataObject.GetValue("userId");
-		// int photoId = (int)dataObject.GetValue("photoId");
+		int photoId = (int)dataObject.GetValue("photoId");
 
-		_controller.switchTurn(Id,0);
+		_controller.switchTurn(Id,photoId);
 	}
 
 	IEnumerator cardCodeHandler(JToken dt)
@@ -160,14 +173,14 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 				Card s = new Card(suit,rank);
 				_controller.addUserCard(s);
-				yield return new WaitForSeconds(0.9f);
+				yield return new WaitForSeconds(0.8f);
 			}
 
 			_transporter.requestTurn(_userId);
 
 		}
 
-		yield return null;
+		yield break;
 	}
 
 
