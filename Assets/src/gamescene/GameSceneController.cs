@@ -110,6 +110,12 @@ public class GameSceneController : MonoBehaviour {
 		}
 	}
 
+	public void showInvalidMove()
+	{
+		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
+		overlayScript.showInvalid();
+	}
+
 
 	public void addCardCount(string id, int count)
 	{
