@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Linq;
 
 public class OwnedCardRenderer : CardRenderer {
 
@@ -15,6 +16,9 @@ public class OwnedCardRenderer : CardRenderer {
 	{
 		GameObject card = getObject("GameCard");
 		card.GetComponent<GameCard>().addCard(s);
+
+		card.GetComponent<Button>().interactable = false;
+
 		setImage(card, s.getSuit(), s.getRank());
 		setGeometry(card);
 
@@ -53,6 +57,14 @@ public class OwnedCardRenderer : CardRenderer {
 			if(c.isCardSimilar(s))
 				child.gameObject.SetActive(false);
 		}
+	}
+
+	public void toggleCardInteractable()
+	{
+		bool interactable = transform.GetChild(0).GetComponent<Button>().interactable;
+
+		for(int i = 0;i < transform.childCount;i++)
+			transform.GetChild(i).GetComponent<Button>().interactable = !interactable;
 	}
 	
 
