@@ -46,6 +46,7 @@ public class MainPlayer : MonoBehaviour {
 	public void toggleTurn()
 	{
 		_hasTurn = !_hasTurn;
+		cardLocation.GetComponent<OwnedCardRenderer>().toggleCardInteractable();
 		actions.SetActive(_hasTurn);
 	}
 
@@ -87,7 +88,6 @@ public class MainPlayer : MonoBehaviour {
 
 	public void renderDealt(Card[] s)
 	{
-		actions.SetActive(false);
 		dealtCard.GetComponent<DealtCardRenderer>().render(s);
 	}
 
@@ -96,13 +96,6 @@ public class MainPlayer : MonoBehaviour {
 	public void requestRemove(Card s)
 	{
 		cardLocation.GetComponent<OwnedCardRenderer>().removeCard(s);
-	}
-
-
-	public void endDistribute()
-	{
-		var obj = getDictionary();
-		_transport.requestTurn(obj);
 	}
 
 	/* end */
