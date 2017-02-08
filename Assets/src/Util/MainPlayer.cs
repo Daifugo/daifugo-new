@@ -72,6 +72,11 @@ public class MainPlayer : MonoBehaviour {
 
 	/* Render cards */
 
+	public void deleteDealt()
+	{
+		dealtCard.GetComponent<DealtCardRenderer>().removeCard(null);
+	}
+
 	public void addCard(Card s)
 	{
 		GameObject c = cardLocation.GetComponent<OwnedCardRenderer>().render(s);
