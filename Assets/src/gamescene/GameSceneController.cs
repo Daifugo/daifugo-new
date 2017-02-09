@@ -141,6 +141,13 @@ public class GameSceneController : MonoBehaviour {
 		b.GetComponent<Player>().setCardCount(count);
 	}
 
+	public void showRoundWin(string id, int photoId)
+	{
+		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
+		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
+
+		overlayScript.showWin(main.getId() == id, photoId);
+	}
 
 
 }
