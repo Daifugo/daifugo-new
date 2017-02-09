@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class DealtCardRenderer : CardRenderer {
+public class DealtCardRenderer : PlayerRightCardRenderer {
 
 
 	private const float _dealtCardWidth = 70.0f;
@@ -11,15 +11,9 @@ public class DealtCardRenderer : CardRenderer {
 	private const float _dealtCardY = 0.0f;
 
 
-	public override void render(Card[] s)
+	protected override IEnumerator renderCard(Card[] cards)
 	{
-		StartCoroutine(displayDealt(s));
-	}
-
-
-	IEnumerator displayDealt(Card[] cards)
-	{
-		float xCoor = calculateStartX(cards.Length);
+		float xCoor = calculateX(cards.Length);
 		var MainPlayer = transform.parent.GetComponent<MainPlayer>();
 
 		yield return new WaitForSeconds (1.3f);
@@ -41,7 +35,7 @@ public class DealtCardRenderer : CardRenderer {
 	}
 
 
-	float calculateStartX(int length)
+	protected override float calculateX(int length)
 	{
 		int numOfLeftSideCards = length / 2;
 		float xCoor = 0.0f;
@@ -62,12 +56,6 @@ public class DealtCardRenderer : CardRenderer {
 	}
 
 
-	protected override void setImage(GameObject card, int suit, int rank)
-	{
-		card.GetComponent<Image>().sprite = _spawner.getSprite (suit, rank);
-	}
-
-
 	protected override void setGeometry(GameObject card, float xCoor = 0.0f)
 	{
 		RectTransform rect = card.GetComponent<RectTransform>();
@@ -77,13 +65,6 @@ public class DealtCardRenderer : CardRenderer {
 
 		rect.anchorMax = new Vector2(0.5f,0.5f);
 		rect.anchorMin = new Vector2(0.5f,0.5f);
-	}
-
-
-	public override void removeCard(Card s)
-	{
-		foreach(Transform child in transform)
-			Destroy(child.gameObject);
 	}
 
 	// Use this for initialization
