@@ -60,8 +60,9 @@ public class PlayerRightCardRenderer : CardRenderer {
 
 	public override void removeCard(Card s)
 	{
-
-	} 
+		foreach(Transform child in transform)
+			Destroy(child.gameObject);
+	}
 
 	protected override void setImage(GameObject card, int suit, int rank)
 	{
