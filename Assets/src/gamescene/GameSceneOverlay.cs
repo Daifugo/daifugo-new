@@ -16,6 +16,9 @@ public class GameSceneOverlay : MonoBehaviour {
 
 	public GameObject invalidMove;
 
+	public GameObject playerWin;
+	public GameObject mainPlayerWin;
+
 	Text textComponent = null;
 
 	public void changeText(int state = -1)
@@ -72,6 +75,20 @@ public class GameSceneOverlay : MonoBehaviour {
 		else
 		{
 			playerTurn.GetComponent<PlayerTurnView>().show(photoId, false);
+		}
+	}
+
+	public void showWin(bool isMainPlayer, int photoId)
+	{
+		gameObject.SetActive(true);
+
+		if(isMainPlayer)
+		{
+			mainPlayerWin.GetComponent<MainPlayerTurnview>().show(true);
+		}
+		else
+		{
+			playerWin.GetComponent<PlayerTurnView>().show(photoId, true);
 		}
 	}
 
