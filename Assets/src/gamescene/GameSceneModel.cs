@@ -104,6 +104,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						deleteDealtHandler(d);
 					break;
 
+					case Constants.ROUNDWIN_CODE:
+						roundWinHandler(d);
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -114,6 +118,15 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+	void roundWinHandler(JToken data)
+	{
+		JObject dataObject = (JObject)data;
+		string Id = (string)dataObject.GetValue("userId");
+		int photoId = (int)dataObject.GetValue("photoId");
+
+		_controller.showRoundWin(Id,photoId);
+	}
 
 	void deleteDealtHandler(JToken data)
 	{
