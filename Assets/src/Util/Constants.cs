@@ -20,6 +20,8 @@ public static class Constants{
 	public const int INVALIDMOVE_CODE = 55;
 	public const int DELETEDEALT_CODE = 56;
 	public const int ROUNDWIN_CODE = 57;
+	public const int NEWROUND_CODE = 58;
+	public const int RULESLIST_CODE = 59;
 	public const int MOVE_CODE = 103;
 
 }
