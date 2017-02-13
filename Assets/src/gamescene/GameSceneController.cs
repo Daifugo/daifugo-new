@@ -133,6 +133,17 @@ public class GameSceneController : MonoBehaviour {
 		}
 	}
 
+	public void showNewRound()
+	{
+		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
+		overlayScript.showNewRound();
+
+		foreach(var j in playerSpaces)
+			j.GetComponent<Player>().remove();
+
+		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
+		main.deleteDealt();
+	}
 
 	public void addCardCount(string id, int count)
 	{
