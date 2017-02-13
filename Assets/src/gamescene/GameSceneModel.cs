@@ -108,6 +108,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						roundWinHandler(d);
 					break;
 
+					case Constants.NEWROUND_CODE:
+						newRoundHandler();
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -133,6 +137,11 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		JObject dataObject = (JObject)data;
 		string Id = (string)dataObject.GetValue("userId");
 		_controller.deleteDealt(Id);
+	}
+
+	void newRoundHandler()
+	{
+		_controller.showNewRound();
 	}
 
 	void invalidMoveHandler()
