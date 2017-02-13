@@ -112,6 +112,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 						newRoundHandler();
 					break;
 
+					case Constants.RULESLIST_CODE:
+						rulesListHandler(d);	
+					break;
+
 				}
 
 				_dataMutex.ReleaseMutex();
@@ -122,6 +126,12 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	}
 
 	/* Code Handlers */
+
+	void rulesListHandler(JToken data)
+	{
+		JArray rules = (JArray)data;
+		_controller.showExtraRule((string)rules[0]);
+	}
 
 	void roundWinHandler(JToken data)
 	{
