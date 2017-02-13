@@ -133,6 +133,13 @@ public class GameSceneController : MonoBehaviour {
 		}
 	}
 
+	public void showExtraRule(string name)
+	{
+		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
+		overlayScript.showRules(name);
+	}
+
+
 	public void showNewRound()
 	{
 		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
