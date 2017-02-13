@@ -19,6 +19,7 @@ public class GameSceneOverlay : MonoBehaviour {
 	public GameObject playerWin;
 	public GameObject mainPlayerWin;
 
+	public GameObject newRound;
 	Text textComponent = null;
 
 	public void changeText(int state = -1)
@@ -90,6 +91,12 @@ public class GameSceneOverlay : MonoBehaviour {
 		{
 			playerWin.GetComponent<PlayerTurnView>().show(photoId, true);
 		}
+	}
+
+	public void showNewRound()
+	{
+		gameObject.SetActive(true);
+		newRound.GetComponent<MainPlayerTurnview>().show(true);
 	}
 
 
