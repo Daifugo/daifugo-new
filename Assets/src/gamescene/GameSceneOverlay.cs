@@ -20,6 +20,8 @@ public class GameSceneOverlay : MonoBehaviour {
 	public GameObject mainPlayerWin;
 
 	public GameObject newRound;
+	public GameObject rules;
+
 	Text textComponent = null;
 
 	public void changeText(int state = -1)
@@ -97,6 +99,12 @@ public class GameSceneOverlay : MonoBehaviour {
 	{
 		gameObject.SetActive(true);
 		newRound.GetComponent<MainPlayerTurnview>().show(true);
+	}
+
+	public void showRules(string name)
+	{
+		gameObject.SetActive(true);
+		rules.GetComponent<RulesOverlay>().show(true, name);
 	}
 
 
