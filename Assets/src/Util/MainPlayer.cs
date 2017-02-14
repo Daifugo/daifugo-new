@@ -89,6 +89,7 @@ public class MainPlayer : MonoBehaviour {
 	public void renderDealt(Card[] s)
 	{
 		dealtCard.GetComponent<DealtCardRenderer>().render(s);
+		_selectedCards.Clear();
 	}
 
 	/* called from child object */
@@ -112,7 +113,6 @@ public class MainPlayer : MonoBehaviour {
 		obj.Add("cards",converted.ToArray());
 
 		_transport.sendPlayerMove(obj);
-		_selectedCards.Clear();
 	}
 
 
