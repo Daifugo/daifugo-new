@@ -8,7 +8,7 @@ public class CardGameSpawner{
 	private Dictionary<int,string> _heartSuit;
 	private Dictionary<int,string> _diamondSuit;
 	private Dictionary<int,string> _spadesSuit;
-
+	private Dictionary<int,string> _jokers;
 
 	public CardGameSpawner()
 	{
@@ -17,6 +17,7 @@ public class CardGameSpawner{
 		_clubSuit = new Dictionary<int, string> ();
 		_diamondSuit = new Dictionary<int, string> ();
 		_spadesSuit = new Dictionary<int, string> ();
+		_jokers = new Dictionary<int,string>();
 
 	
 		var r = new string[] { "_of_hearts", "_of_clubs","_of_diamonds","_of_spades"};
@@ -29,6 +30,9 @@ public class CardGameSpawner{
 
 			}
 		}
+
+		_jokers.Add(0,"0_jokers");
+
 	}
 
 	public Sprite getSprite (int suit, int rank)
@@ -36,8 +40,12 @@ public class CardGameSpawner{
 		string imageName = null;
 		Dictionary <int,string> g = getDictionaryForKey (suit);
 
-		if (g != null)
+
+		if (suit != 0)
 			g.TryGetValue(rank, out imageName);
+		else
+			g.TryGetValue(suit, out imageName);
+
 			
 		string path = "cards/" + getFolderNameForKey(suit) + "/" + imageName;
 		Sprite sprite = Util.getSprite(path);
@@ -48,8 +56,11 @@ public class CardGameSpawner{
 
 	private Dictionary<int,string> getDictionaryForKey(int key)
 	{
-
-		if (key == 1) 
+		if(key == 0)
+		{
+			return _jokers;
+		}
+		else if (key == 1) 
 		{
 			return _heartSuit;
 		} 
@@ -72,7 +83,11 @@ public class CardGameSpawner{
 
 	private string getFolderNameForKey(int key)
 	{
-		if (key == 1) 
+		if(key == 0)
+		{
+			return "joker";
+		}
+		else if (key == 1) 
 		{
 			return "hearts";
 		} 
