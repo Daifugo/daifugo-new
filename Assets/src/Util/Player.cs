@@ -56,6 +56,26 @@ public class Player : MonoBehaviour {
 		
 	}
 
+	public void remove()
+	{
+		PlayerRightCardRenderer c = cardRenderTop.GetComponent<PlayerRightCardRenderer>();
+		PlayerLeftCardRenderer x = cardRenderTop.GetComponent<PlayerLeftCardRenderer>();
+		DealtCardRenderer m = cardRenderTop.GetComponent<DealtCardRenderer>();
+
+		if(c == null && x == null)
+		{
+			m.removeCard(null);
+		}
+		else if(c == null && m == null)
+		{
+			x.removeCard(null);
+		}
+		else if(x == null && m == null)
+		{
+			c.removeCard(null);
+		}
+	}
+
 	public void showCard(Card[] s)
 	{
 		PlayerRightCardRenderer c = cardRenderTop.GetComponent<PlayerRightCardRenderer>();
