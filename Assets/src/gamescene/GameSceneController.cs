@@ -13,10 +13,15 @@ public class GameSceneController : MonoBehaviour {
 
 	void Start () {
 		
-		var userId = PlayerPrefs.GetString ("userId");
-		
+
 		var userDetails = new Dictionary<string, object>();
-		userDetails.Add("userId", userId);
+		userDetails.Add("userId", PlayerPrefs.GetString ("userId"));
+
+		
+		// set Id 	
+
+		mainPlayer.GetComponent<MainPlayer>().setId(userDetails);
+		overlay.GetComponent<GameSceneOverlay>().setId(userDetails);
 
 
 		// get player spaces
@@ -74,11 +79,6 @@ public class GameSceneController : MonoBehaviour {
 			counter++;
 		}
 
-	}
-
-	public void setMainUserId(string s)
-	{
-		mainPlayer.GetComponent<MainPlayer>().setId(s);
 	}
 
 
