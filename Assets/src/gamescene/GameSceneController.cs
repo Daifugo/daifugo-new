@@ -9,13 +9,30 @@ public class GameSceneController : MonoBehaviour {
 	public GameObject overlay;
 
 	private GameObject playerWithTurn = null;
+	private Transporter _transporter;
 
 	void Start () {
 		
+		var userId = PlayerPrefs.GetString ("userId");
+		
+		var userDetails = new Dictionary<string, object>();
+		userDetails.Add("userId", userId);
+
+
+		// get player spaces
+
 		playerSpaces = GameObject.FindGameObjectsWithTag("player");
+
+
+		// Obtain transporter object and send 
+		// greet message
+
+		_transporter = GameObject.Find("Transporter").GetComponent<Transporter>();
+		_transporter.greetServer(userDetails);
 
 	}
 	
+
 	// Update is called once per frame
 	void Update () {
 	
