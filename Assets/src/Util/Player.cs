@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
@@ -13,7 +14,6 @@ public class Player : MonoBehaviour {
 
 	bool _isOccupied = false;
 	string _userId = null;
-
 
 	public bool isSpaceVacant()
 	{
@@ -30,8 +30,9 @@ public class Player : MonoBehaviour {
 
 	public string getId()
 	{
-		return this._userId;
+		return _userId;
 	}
+
 
 	public void setCardCount(int s)
 	{
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour {
 
 	}
 
+
 	private void setAvatar(int photoId)
 	{
 		GameObject ava = Resources.Load ("prefabs/gameAvatar"+(photoId+1), typeof(GameObject)) as GameObject;
@@ -51,10 +53,12 @@ public class Player : MonoBehaviour {
 		s.GetComponent<RectTransform>().sizeDelta = new Vector2(150.0f,150.0f);
 	}
 
+
 	public void toggleTurn()
 	{
-		
+
 	}
+
 
 	public void remove()
 	{
@@ -76,6 +80,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+
 	public void showCard(Card[] s)
 	{
 		PlayerRightCardRenderer c = cardRenderTop.GetComponent<PlayerRightCardRenderer>();
@@ -84,23 +89,31 @@ public class Player : MonoBehaviour {
 
 		if(c == null && x == null)
 		{
-			m.render(s);
+			helperRender(m, s);
 		}
 		else if(c == null && m == null)
 		{
-			x.render(s);
+			helperRender(x, s);
 		}
 		else if(x == null && m == null)
 		{
-			c.render(s);
+			helperRender(c, s);
 		}
+	}
 
+
+	void helperRender(PlayerRightCardRenderer renderer, Card[] cards)
+	{
+		renderer.initializeXCoor(cards);
+
+		foreach(var card in cards)
+			renderer.render(card);
 	}
 
 
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
