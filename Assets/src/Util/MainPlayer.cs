@@ -11,7 +11,7 @@ public class MainPlayer : MonoBehaviour {
 	public GameObject dealtCard;
 
 	Transporter _transport = null;
-	string _id = null;
+	Dictionary<string,object> _id = null;
 	bool _hasTurn = false;
 	List<GameCard> _selectedCards = null;
 
@@ -31,14 +31,14 @@ public class MainPlayer : MonoBehaviour {
 
 	/* accessors of _id */
 
-	public void setId(string id)
+	public void setId(Dictionary<string,object> id)
 	{
 		this._id = id;
 	}
 
 	public string getId()
 	{
-		return this._id;
+		return (string)this._id["userId"];
 	}
 
 	/* end accessor */
@@ -49,7 +49,7 @@ public class MainPlayer : MonoBehaviour {
 		cardLocation.GetComponent<OwnedCardRenderer>().toggleCardInteractable();
 		actions.SetActive(_hasTurn);
 
-		_transport.sendM(getDictionary());
+		_transport.sendM(this._id);
 	}
 
 
@@ -96,7 +96,7 @@ public class MainPlayer : MonoBehaviour {
 			yield return new WaitForSeconds(0.8f);
 		}
 
-		_transport.requestTurn(getDictionary());
+		_transport.requestTurn(this._id);
 
 		yield break;
 	}
@@ -118,6 +118,7 @@ public class MainPlayer : MonoBehaviour {
 		}
 
 		_selectedCards.Clear();
+		_transport.sendM(this._id);
 	}
 
 
@@ -138,7 +139,7 @@ public class MainPlayer : MonoBehaviour {
 	{
 		var converted = _selectedCards.Select(elem => elem.getCard().getDictionary());
 
-		var obj = getDictionary();
+		var obj = this._id;
 		obj.Add("cards",converted.ToArray());
 
 		_transport.sendPlayerMove(obj);
@@ -147,8 +148,7 @@ public class MainPlayer : MonoBehaviour {
 
 	public void passTurn()
 	{
-		var obj = getDictionary();
-		_transport.sendPassTurn(obj);
+		_transport.sendPassTurn(this._id);
 		_selectedCards.Clear();
 	}
 
