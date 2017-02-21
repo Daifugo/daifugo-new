@@ -154,12 +154,4 @@ public class MainPlayer : MonoBehaviour {
 
 	/* End Button action handlers */
 
-	Dictionary<string,object> getDictionary()
-	{
-		var obj = new Dictionary<string,object>();
-		obj.Add("userId",_id);
-
-		return obj;
-	}
-
 }
