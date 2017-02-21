@@ -43,13 +43,14 @@ public class MainPlayer : MonoBehaviour {
 
 	/* end accessor */
 
-	public void toggleTurn()
+	public void toggleTurn(bool isPrev)
 	{
 		_hasTurn = !_hasTurn;
 		cardLocation.GetComponent<OwnedCardRenderer>().toggleCardInteractable();
 		actions.SetActive(_hasTurn);
 
-		_transport.sendM(this._id);
+		if(isPrev)
+			_transport.sendM(this._id);
 	}
 
 
@@ -133,13 +134,14 @@ public class MainPlayer : MonoBehaviour {
 
 	/* end render */
 
+
 	/* Button action handlers */
 
 	public void dealCardHandler()
 	{
 		var converted = _selectedCards.Select(elem => elem.getCard().getDictionary());
 
-		var obj = this._id;
+		var obj = new Dictionary<string, object>(this._id);
 		obj.Add("cards",converted.ToArray());
 
 		_transport.sendPlayerMove(obj);
