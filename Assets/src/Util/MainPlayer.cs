@@ -78,13 +78,26 @@ public class MainPlayer : MonoBehaviour {
 		dealtCard.GetComponent<DealtCardRenderer>().removeCard(null);
 	}
 
-	public void addCard(Card s)
+
+	public void addCard(Card[] s)
 	{
-		GameObject c = cardLocation.GetComponent<OwnedCardRenderer>().render(s);
-		c.GetComponent<GameCard>().addHandler(delegate{
-			buttonCardHandler(c);
-		});
+		StartCoroutine(addCardCoroutine(s));
 	}
+
+
+	IEnumerator addCardCoroutine(Card[] s)
+	{
+		foreach(var card in s)
+		{
+			GameObject c = cardLocation.GetComponent<OwnedCardRenderer>().render(card);
+			c.GetComponent<GameCard>().addHandler(delegate{
+				buttonCardHandler(c);
+			});
+
+			yield return new WaitForSeconds(0.8f);
+		}
+	}
+
 
 	public void renderDealt(Card[] s)
 	{
