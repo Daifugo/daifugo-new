@@ -10,38 +10,22 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	public GameObject controllerObject;
 	private GameSceneController _controller;
 
-	Transporter _transporter = null;
 	Mutex _dataMutex = null;
-
-	List<Data> dataBuffer;
-	Dictionary<string,object> _userId;
+	List<Data> _dataBuffer;
 
 	// Use this for initialization
 
 	void Start () {
 	
-		dataBuffer = new List<Data>();
+		_dataBuffer = new List<Data>();
 		_dataMutex = new Mutex();
-
-		/* Obtain transporter object */
-
-		_transporter = GameObject.Find("Transporter").GetComponent<Transporter>();
-		_transporter.setSocketDelegate (this);
-
-		/* end transporter object */
-
-		/* send greet message to server */
-
-		_userId = new Dictionary<string, object> {
-			{ "userId",PlayerPrefs.GetString ("userId") }
-		};
-
-		_transporter.greetServer(_userId);
-
-		/* end send greet */
-
 		_controller = controllerObject.GetComponent<GameSceneController>();
-		_controller.setMainUserId(PlayerPrefs.GetString ("userId"));
+
+
+		/* Obtain and set delegate of transporter object */
+
+		var transporter = GameObject.Find("Transporter").GetComponent<Transporter>();
+		transporter.setSocketDelegate (this);
 
 		StartCoroutine(parseData());
 	}
@@ -53,17 +37,17 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		while(true)
 		{
 
-			while(dataBuffer.Count == 0)
+			while(_dataBuffer.Count == 0)
 				yield return null;
 
 			
-			for(var i = 0;i < dataBuffer.Count;i++)
+			for(var i = 0;i < _dataBuffer.Count;i++)
 			{
 
 				_dataMutex.WaitOne();
 
-				JToken d = dataBuffer[i].getData();
-				int code = dataBuffer[i].getCode();
+				JToken d = _dataBuffer[i].getData();
+				int code = _dataBuffer[i].getCode();
 
 				switch(code)
 				{
@@ -121,7 +105,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 				_dataMutex.ReleaseMutex();
 			}
 
-			dataBuffer.Clear();
+			_dataBuffer.Clear();
 		}
 	}
 
@@ -142,12 +126,14 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		_controller.showRoundWin(Id,photoId);
 	}
 
+
 	void deleteDealtHandler(JToken data)
 	{
 		JObject dataObject = (JObject)data;
 		string Id = (string)dataObject.GetValue("userId");
 		_controller.deleteDealt(Id);
 	}
+
 
 	void newRoundHandler()
 	{
@@ -211,6 +197,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 		_controller.switchTurn(Id,photoId,prevId);
 	}
+
 
 	IEnumerator cardCodeHandler(JToken dt)
 	{
@@ -283,7 +270,6 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 				yield return new WaitForSeconds(1.2f);
 		}
 
-		//_transporter.requestCards(_userId);
 		yield return null;
 
 	}	
@@ -302,7 +288,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		_dataMutex.WaitOne();
 
 		var d = new Data(responseCode,responseToken);
-		dataBuffer.Add(d);
+		_dataBuffer.Add(d);
 
 		_dataMutex.ReleaseMutex();
 	}
