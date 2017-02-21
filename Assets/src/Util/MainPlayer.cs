@@ -104,7 +104,19 @@ public class MainPlayer : MonoBehaviour {
 
 	public void renderDealt(Card[] s)
 	{
-		dealtCard.GetComponent<DealtCardRenderer>().render(s);
+		dealtCard.GetComponent<DealtCardRenderer>().initializeXCoor(s);
+		StartCoroutine(renderDealtCardCoroutine(s));
+	}
+
+
+	IEnumerator renderDealtCardCoroutine(Card[] s)
+	{
+		foreach(var card in s)
+		{
+			dealtCard.GetComponent<DealtCardRenderer>().render(card);
+			yield return new WaitForSeconds(0.9f);
+		}
+
 		_selectedCards.Clear();
 	}
 
