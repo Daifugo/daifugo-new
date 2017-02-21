@@ -82,7 +82,7 @@ public class GameSceneController : MonoBehaviour {
 	}
 	
 
-	public void addUserCard(Card s)
+	public void addUserCard(Card[] s)
 	{
 		mainPlayer.GetComponent<MainPlayer>().addCard(s);
 	}
