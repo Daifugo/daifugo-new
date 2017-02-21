@@ -11,50 +11,39 @@ public class PlayerRightCardRenderer : CardRenderer {
 	protected float pivotX1Coor = 75.0f;
 	protected const float pivotX2Coor = 150.0f;
 
+	protected float startX = 0.0f;
 
-	public override void render(Card[] s)
+
+	public virtual void initializeXCoor(Card[] cards)
 	{
-		StartCoroutine(renderCard(s));
-	}
+		float length = cards.Length;
 
-
-	protected virtual IEnumerator renderCard(Card[] cards)
-	{
-		float startX = calculateX(cards.Length);
-
-		yield return new WaitForSeconds (1.3f);
-
-		foreach(var card in cards)
-		{
-			GameObject cardPrefab = getObject("maincard");
-
-			setImage(cardPrefab, card.getSuit(),card.getRank());
-			setGeometry(cardPrefab, startX);
-
-			startX += CARD_SPACE;
-
-			yield return new WaitForSeconds (0.9f);
-		}
-	}
-
-
-	protected virtual float calculateX(int length)
-	{
 		if(length == 1)
 		{
-			return pivotX2Coor;
+			this.startX = pivotX2Coor;
 		}
 		else if(length < 5)
 		{
 			float w = (pivotX2Coor / length) - 5.0f;
-			return (pivotX1Coor + w);
+			this.startX = (pivotX1Coor + w);
 		}
 		else
 		{
 			int y = length == 5?3:((length == 6)?6:10);
 			var h = (pivotX2Coor / length) - (length * y);
-			return (pivotX1Coor + h);
+			this.startX = (pivotX1Coor + h);
 		}
+	}
+
+
+	public override void render(Card card)
+	{
+		GameObject cardPrefab = getObject("maincard");
+
+		setImage(cardPrefab, card.getSuit(),card.getRank());
+		setGeometry(cardPrefab, startX);
+
+		this.startX += CARD_SPACE;
 	}
 
 
