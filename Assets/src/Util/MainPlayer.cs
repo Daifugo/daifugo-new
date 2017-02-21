@@ -48,13 +48,15 @@ public class MainPlayer : MonoBehaviour {
 		_hasTurn = !_hasTurn;
 		cardLocation.GetComponent<OwnedCardRenderer>().toggleCardInteractable();
 		actions.SetActive(_hasTurn);
+
+		_transport.sendM(getDictionary());
 	}
 
 
 	/* handler for card owned */
 
 	public void buttonCardHandler(GameObject c)
-	{
+	{	
 		GameCard gc = c.GetComponent<GameCard>();
 
 		if(gc.isSelected())
@@ -87,15 +89,16 @@ public class MainPlayer : MonoBehaviour {
 
 	IEnumerator addCardCoroutine(Card[] s)
 	{
+
 		foreach(var card in s)
 		{
-			GameObject c = cardLocation.GetComponent<OwnedCardRenderer>().render(card);
-			c.GetComponent<GameCard>().addHandler(delegate{
-				buttonCardHandler(c);
-			});
-
+			cardLocation.GetComponent<OwnedCardRenderer>().render(card, buttonCardHandler);
 			yield return new WaitForSeconds(0.8f);
 		}
+
+		_transport.requestTurn(getDictionary());
+
+		yield break;
 	}
 
 
@@ -104,6 +107,7 @@ public class MainPlayer : MonoBehaviour {
 		dealtCard.GetComponent<DealtCardRenderer>().render(s);
 		_selectedCards.Clear();
 	}
+
 
 	/* called from child object */
 
