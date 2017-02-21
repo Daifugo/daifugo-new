@@ -13,22 +13,23 @@ public class PlayerLeftCardRenderer : PlayerRightCardRenderer {
 	
 	}
 
-	protected override float calculateX(int length)
+	public override void initializeXCoor(Card[] cards)
 	{
+		float length = cards.Length;
+		
 		if(length == 1)
 		{
-			return 100.0f;
+			this.startX = 100.0f;
 		}
 		else if(length < 5)
 		{
 			float u = (pivotX2Coor / length);
 			float x = length == 2?u-5.0f:u;
-			return (x + 20);
+			this.startX = (x + 20);
 		}
 		else
 		{
-			var h = (pivotX2Coor / length) + 15;
-			return h;
+			this.startX = (pivotX2Coor / length) + 15;
 		}
 	}
 
