@@ -5,8 +5,7 @@ public abstract class CardRenderer : MonoBehaviour {
 
 	protected CardGameSpawner _spawner = null;
 
-	public virtual GameObject render(Card s){ return null; }
-	public virtual void render(Card[] s){}
+	public virtual void render(Card s){}
 
 	public abstract void removeCard(Card s); 
 
