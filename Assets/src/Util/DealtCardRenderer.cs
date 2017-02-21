@@ -11,33 +11,11 @@ public class DealtCardRenderer : PlayerRightCardRenderer {
 	private const float _dealtCardY = 0.0f;
 
 
-	protected override IEnumerator renderCard(Card[] cards)
+	public override void initializeXCoor(Card[] cards)
 	{
-		float xCoor = calculateX(cards.Length);
-		var MainPlayer = transform.parent.GetComponent<MainPlayer>();
+		float length = cards.Length;
 
-		yield return new WaitForSeconds (1.3f);
-
-		foreach(var card in cards)
-		{
-			if(MainPlayer != null)
-				MainPlayer.requestRemove(card);
-
-			GameObject cardPrefab = getObject("maincard");
-
-			setImage(cardPrefab, card.getSuit(),card.getRank());
-			setGeometry(cardPrefab, xCoor);
-
-			xCoor += _DEALTCARD_SPACE;
-
-			yield return new WaitForSeconds (0.9f);
-		}
-	}
-
-
-	protected override float calculateX(int length)
-	{
-		int numOfLeftSideCards = length / 2;
+		float numOfLeftSideCards = length / 2;
 		float xCoor = 0.0f;
 
 		if (length % 2 != 0) {
@@ -52,9 +30,19 @@ public class DealtCardRenderer : PlayerRightCardRenderer {
 
 		}
 
-		return xCoor;
+		this.startX = xCoor;
 	}
 
+
+	public override void render(Card card)
+	{
+		var mainPlayer = transform.parent.GetComponent<MainPlayer>();
+
+		if(mainPlayer != null)
+			mainPlayer.requestRemove(card);
+
+		base.render(card);
+	}
 
 	protected override void setGeometry(GameObject card, float xCoor = 0.0f)
 	{
