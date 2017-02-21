@@ -226,20 +226,21 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 		else
 		{
 			JArray cards = (JArray)cardsToken;
-			foreach(var c in cards)
+			Card[] c = new Card[cards.Count];
+
+			for(int i = 0; i <cards.Count;i++)
 			{
-				JObject cardObject = (JObject)c;
+				JObject cardObject = (JObject)cards[i];
 
 				var suit = (int)cardObject.GetValue("_suit");
 				var rank = (int)cardObject.GetValue("_kind");
 
 				Card s = new Card(suit,rank);
-				_controller.addUserCard(s);
-				yield return new WaitForSeconds(0.8f);
+
+				c[i] = s;
 			}
 
-			_transporter.requestTurn(_userId);
-
+			_controller.addUserCard(c);
 		}
 
 		yield break;
@@ -282,7 +283,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 				yield return new WaitForSeconds(1.2f);
 		}
 
-		_transporter.requestCards(_userId);
+		//_transporter.requestCards(_userId);
 		yield return null;
 
 	}	
