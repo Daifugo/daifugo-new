@@ -11,8 +11,9 @@ public class OwnedCardRenderer : CardRenderer {
 	private const float _cardWidth = 153.0f;
 	private const float _cardHeight = 220.0f;
 
+	public delegate void MyFunction(GameObject x);
 
-	public override void render(Card s, MyFunction buttonHandler = null)
+	public void render(Card s, MyFunction buttonHandler)
 	{
 		GameObject card = getObject("GameCard");
 		card.GetComponent<GameCard>().addCard(s);
