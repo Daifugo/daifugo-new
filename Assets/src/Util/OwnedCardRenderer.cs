@@ -12,17 +12,19 @@ public class OwnedCardRenderer : CardRenderer {
 	private const float _cardHeight = 220.0f;
 
 
-	public override GameObject render(Card s)
+	public override void render(Card s, MyFunction buttonHandler = null)
 	{
 		GameObject card = getObject("GameCard");
 		card.GetComponent<GameCard>().addCard(s);
+
+		card.GetComponent<GameCard>().addHandler(delegate{
+			buttonHandler(card);
+		});
 
 		card.GetComponent<Button>().interactable = false;
 
 		setImage(card, s.getSuit(), s.getRank());
 		setGeometry(card);
-
-		return card;
 	}
 
 
@@ -55,7 +57,9 @@ public class OwnedCardRenderer : CardRenderer {
 			GameCard c = child.GetComponent<GameCard>();
 
 			if(c.isCardSimilar(s))
+			{
 				child.gameObject.SetActive(false);
+			}
 		}
 	}
 
