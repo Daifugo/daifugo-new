@@ -80,4 +80,9 @@ public class Transporter : MonoBehaviour {
 		_socket.sendJSON(Constants.PASSTURN_CODE, dt);
 	}
 
+	public void sendMessageSeq(Dictionary<string,object> dt)
+	{
+		_socket.sendJSON(Constants.MESSAGESEQ_CODE, dt);
+	}
+
 }
