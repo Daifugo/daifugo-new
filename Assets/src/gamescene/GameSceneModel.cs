@@ -133,7 +133,9 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 	{
 		JObject dataObject = (JObject)data;
 		string Id = (string)dataObject.GetValue("userId");
-		_controller.deleteDealt(Id);
+		string deleteCaller = (string)dataObject.GetValue("caller");
+
+		_controller.deleteDealt(Id, deleteCaller);
 	}
 
 
