@@ -50,7 +50,7 @@ public class MainPlayer : MonoBehaviour {
 		actions.SetActive(_hasTurn);
 
 		if(isPrev)
-			_transport.sendM(this._id);
+			_transport.sendMessageSeq(this._id);
 	}
 
 
@@ -119,7 +119,7 @@ public class MainPlayer : MonoBehaviour {
 		}
 
 		_selectedCards.Clear();
-		_transport.sendM(this._id);
+		_transport.sendMessageSeq(this._id);
 	}
 
 
