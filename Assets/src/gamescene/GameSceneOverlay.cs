@@ -142,6 +142,18 @@ public class GameSceneOverlay : MonoBehaviour {
 	}
 
 
+	#region Transporter 
+
+
+	public void send()
+	{
+		_transport.sendMessageSeq(_userId);
+	}
+
+
+	#endregion
+
+
 	void Start()
 	{
 		_transport = (GameObject.Find("Transporter")).GetComponent<Transporter> ();
