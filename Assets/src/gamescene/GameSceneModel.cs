@@ -113,8 +113,10 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 	void rulesListHandler(JToken data)
 	{
-		JArray rules = (JArray)data;
-		_controller.showExtraRule((string)rules[0]);
+		JObject ruleObject = (JObject)data;
+		string ruleName = (string)ruleObject.GetValue("ruleName");
+
+		_controller.showExtraRule(ruleName);
 	}
 
 	void roundWinHandler(JToken data)
