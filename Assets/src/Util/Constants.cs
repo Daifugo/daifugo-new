@@ -22,6 +22,7 @@ public static class Constants{
 	public const int ROUNDWIN_CODE = 57;
 	public const int NEWROUND_CODE = 58;
 	public const int RULESLIST_CODE = 59;
+	public const int MESSAGESEQ_CODE = 61;
 	public const int MOVE_CODE = 103;
 
 }
