@@ -122,6 +122,7 @@ public class GameSceneController : MonoBehaviour {
 
 	}
 
+
 	public void showPassedTurn(string Id, int photoId)
 	{
 		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
@@ -130,20 +131,30 @@ public class GameSceneController : MonoBehaviour {
 		overlayScript.showPassedTurn(main.getId() == Id, photoId);
 	}
 
+
 	public void showInvalidMove()
 	{
 		GameSceneOverlay overlayScript = overlay.GetComponent<GameSceneOverlay>();
 		overlayScript.showInvalid();
 	}
 
+
 	public void deleteDealt(string userId)
 	{
 		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
+
 		if(main.getId() == userId)
 		{
 			main.deleteDealt();
 		}
+		else
+		{
+			List<GameObject> list = new List<GameObject>(playerSpaces);
+			GameObject b = list.Find(x => x.GetComponent<Player>().getId() == userId);
+			b.GetComponent<Player>().remove();
+		}
 	}
+
 
 	public void showExtraRule(string name)
 	{
@@ -164,12 +175,14 @@ public class GameSceneController : MonoBehaviour {
 		main.deleteDealt();
 	}
 
+
 	public void addCardCount(string id, int count)
 	{
 		List<GameObject> list = new List<GameObject>(playerSpaces);
 		GameObject b = list.Find(x => x.GetComponent<Player>().getId() == id);
 		b.GetComponent<Player>().setCardCount(count);
 	}
+
 
 	public void showRoundWin(string id, int photoId)
 	{
