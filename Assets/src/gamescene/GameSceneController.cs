@@ -10,13 +10,14 @@ public class GameSceneController : MonoBehaviour {
 
 	private GameObject playerWithTurn = null;
 	private Transporter _transporter;
+	private Dictionary<string, object> _userDetails = null;
 
 	void Start () {
 		
 
 		var userDetails = new Dictionary<string, object>();
 		userDetails.Add("userId", PlayerPrefs.GetString ("userId"));
-
+		_userDetails = userDetails;
 		
 		// set Id 	
 
@@ -139,7 +140,7 @@ public class GameSceneController : MonoBehaviour {
 	}
 
 
-	public void deleteDealt(string userId)
+	public void deleteDealt(string userId, string deleteCaller)
 	{
 		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
 
@@ -152,6 +153,12 @@ public class GameSceneController : MonoBehaviour {
 			List<GameObject> list = new List<GameObject>(playerSpaces);
 			GameObject b = list.Find(x => x.GetComponent<Player>().getId() == userId);
 			b.GetComponent<Player>().remove();
+		}
+
+
+		if(deleteCaller == main.getId())
+		{
+			_transporter.sendMessageSeq(_userDetails);
 		}
 	}
 
