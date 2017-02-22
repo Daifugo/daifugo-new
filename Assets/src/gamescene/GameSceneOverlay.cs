@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameSceneOverlay : MonoBehaviour {
 
@@ -21,6 +22,9 @@ public class GameSceneOverlay : MonoBehaviour {
 
 	public GameObject newRound;
 	public GameObject rules;
+
+	Transporter _transport = null;
+	Dictionary<string, object> _userId; 
 
 	Text textComponent = null;
 
@@ -49,6 +53,12 @@ public class GameSceneOverlay : MonoBehaviour {
 				stateText.SetActive(false);
 			break;
 		}
+	}
+
+
+	public void setId(Dictionary<string,object> s)
+	{
+		this._userId = s;
 	}
 
 
@@ -134,6 +144,7 @@ public class GameSceneOverlay : MonoBehaviour {
 
 	void Start()
 	{
+		_transport = (GameObject.Find("Transporter")).GetComponent<Transporter> ();
 		gameObject.GetComponent<Image>().enabled = true;
 		textComponent = stateText.GetComponent<Text>();
 		changeText();
