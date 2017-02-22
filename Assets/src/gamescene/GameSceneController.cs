@@ -117,14 +117,9 @@ public class GameSceneController : MonoBehaviour {
 
 		if(main.getId() == id || main.getId() == prevTurn)
 		{
-			mainPlayer.GetComponent<MainPlayer>().toggleTurn();
+			mainPlayer.GetComponent<MainPlayer>().toggleTurn(main.getId() == prevTurn);
 		}
-		else
-		{
-			List<GameObject> list = new List<GameObject>(playerSpaces);
-			GameObject b = list.Find(x => x.GetComponent<Player>().getId() == id);
-			b.GetComponent<Player>().toggleTurn();
-		}
+
 	}
 
 	public void showPassedTurn(string Id, int photoId)
