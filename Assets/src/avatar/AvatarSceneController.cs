@@ -34,6 +34,16 @@ public class AvatarSceneController : MonoBehaviour{
 		}
 
 	}
+	
+	// From AvatarSceneModel
+	
+	public void receiveUserId(string id)
+	{
+		PlayerPrefs.SetString ("userId", id);
+		SceneManager.LoadScene("game");
+	}
+	
+	
 
 	public void showNextButton()
 	{
