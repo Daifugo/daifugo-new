@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Net;
 
 public class MainmenuController : MonoBehaviour {
+
+	public GameObject overlay;
+
 
 	// Use this for initialization
 	void Start () 
@@ -18,12 +22,45 @@ public class MainmenuController : MonoBehaviour {
 
 	public void singlePlayer()
 	{
-		SceneManager.LoadScene ("select");
+		check("select");
 	}
 
-		public void join()
+	public void join()
 	{
-		SceneManager.LoadScene ("join");
+		check("join");
 	}
-
+	
+	
+	void check(string sceneName)
+	{
+		bool isConnected = CheckForInternetConnection();
+		
+		if(isConnected)
+		{
+			SceneManager.LoadScene (sceneName);
+		}
+		else
+		{
+			overlay.GetComponent<MainMenuOverlay>().showMessage();
+		}
+	}
+	
+	
+	bool CheckForInternetConnection()
+	{
+	    try
+	    {
+	        using (var client = new WebClient())
+	        {
+	            using (var stream = client.OpenRead("http://www.baidu.com"))
+	            {
+	                return true;
+	            }
+	        }
+	    }
+	    catch
+	    {
+	        return false;
+	    }
+	}
 }
