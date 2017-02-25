@@ -35,6 +35,7 @@ public class AvatarSceneController : MonoBehaviour{
 
 	}
 	
+	
 	// From AvatarSceneModel
 	
 	public void receiveUserId(string id)
@@ -43,8 +44,13 @@ public class AvatarSceneController : MonoBehaviour{
 		SceneManager.LoadScene("game");
 	}
 	
+	public void disableAvatar(int avatarId)
+	{
+		AvatarsContainer ava = avatarContainer.GetComponent<AvatarsContainer> ();
+		ava.disableAvatars (avatarId);
+	}
 	
-
+	
 	public void showNextButton()
 	{
 		nextButton.SetActive(true);
