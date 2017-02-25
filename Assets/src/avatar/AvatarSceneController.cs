@@ -44,10 +44,15 @@ public class AvatarSceneController : MonoBehaviour{
 		SceneManager.LoadScene("game");
 	}
 	
-	public void disableAvatar(int avatarId)
-	{
-		AvatarsContainer ava = avatarContainer.GetComponent<AvatarsContainer> ();
-		ava.disableAvatars (avatarId);
+	public void disableAvatar(int[] avatarIds)
+	{	
+		foreach(int avatarId in avatarIds)
+		{
+			AvatarsContainer ava = avatarContainer.GetComponent<AvatarsContainer> ();
+			ava.disableAvatars (avatarId);
+		}
+		
+		overlay.GetComponent<AvatarSceneOverlay>().hide();
 	}
 	
 	
