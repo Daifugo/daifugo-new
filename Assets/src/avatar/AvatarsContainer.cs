@@ -37,7 +37,7 @@ public class AvatarsContainer : MonoBehaviour {
 
 	public void finishAnim()
 	{
-		controller.GetComponent<AvatarSceneController>().showNextButton();
+		controller.GetComponent<AvatarSceneController>().notify();
 	}
 
 
