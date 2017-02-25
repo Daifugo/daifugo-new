@@ -89,13 +89,11 @@ public class AvatarSceneController : MonoBehaviour{
 
 		if(PlayerPrefs.HasKey("roomId"))
 		{
-			overlay.GetComponent<AvatarSceneOverlay>().showJoin();
 			d.Add("roomId",PlayerPrefs.GetString("roomId"));
 			_tr.sendJoinRequest (d);
 		}
 		else
 		{
-			overlay.GetComponent<AvatarSceneOverlay>().showStart();
 			d.Add("mode", PlayerPrefs.GetString("mode"));
 			d.Add("rules",PlayerPrefs.GetString("rules"));
 			_tr.sendStartRequest(d);
