@@ -69,6 +69,6 @@ public class AvatarSceneModel : MonoBehaviour, SocketConnectionInterface {
 
 	public void handleError()
 	{
-		
+		_controller.showError();
 	}
 }
