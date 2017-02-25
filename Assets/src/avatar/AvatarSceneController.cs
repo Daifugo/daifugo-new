@@ -40,6 +40,11 @@ public class AvatarSceneController : MonoBehaviour{
 		}
 	}
 	
+	public void showError()
+	{
+		overlay.GetComponent<AvatarSceneOverlay>().showError();
+	}
+	
 	
 	// From AvatarsContainer
 
@@ -62,6 +67,8 @@ public class AvatarSceneController : MonoBehaviour{
 			_tr.requestSelectedAvatars(data);
 		}
 	}
+	
+
 
 
 	/* Button Handlers */
@@ -70,7 +77,7 @@ public class AvatarSceneController : MonoBehaviour{
 	{
 		// Show loading overlay
 
-		overlay.GetComponent<AvatarSceneOverlay>().show();
+		overlay.GetComponent<AvatarSceneOverlay>().showLoading();
 
 
 		// Send join/start request to server
