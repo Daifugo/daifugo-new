@@ -4,21 +4,20 @@ using UnityEngine.UI;
 
 public class AvatarSceneOverlay : MonoBehaviour {
 
-	public GameObject textOBject; 
-
-	public void showJoin()
+	public GameObject textOBject;
+	public GameObject errorMessageBox; 
+	
+	public void showError()
 	{
-		textOBject.GetComponent<Text>().text = "Joining Room...";
+		gameObject.SetActive(true);
+		textOBject.GetComponent<Text>().text ="";
+		errorMessageBox.GetComponent<Animator>().SetBool("show",true);
 	}
 
-	public void showStart()
+	public void showLoading()
 	{
-		textOBject.GetComponent<Text>().text = "Creating A Room...";
-	}
-
-	public void show()
-	{
-		gameObject.GetComponent<Image>().enabled = true;
+		gameObject.SetActive(true);
+		textOBject.GetComponent<Text>().text = "Loading..";
 	}
 
 }
