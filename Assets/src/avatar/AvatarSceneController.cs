@@ -20,19 +20,6 @@ public class AvatarSceneController : MonoBehaviour{
 
 		DontDestroyOnLoad(GameObject.Find("Transporter"));
 		_tr = GameObject.Find("Transporter").GetComponent<Transporter>();
-
-
-		/* If user wants multiplayer */
-
-		if(PlayerPrefs.HasKey("roomId"))
-		{
-			Dictionary<string,object> data = new Dictionary<string,object>(){
-				{"roomId", "asdfs"}
-			};
-
-			_tr.requestSelectedAvatars(data);
-		}
-
 	}
 	
 	
@@ -51,14 +38,29 @@ public class AvatarSceneController : MonoBehaviour{
 			AvatarsContainer ava = avatarContainer.GetComponent<AvatarsContainer> ();
 			ava.disableAvatars (avatarId);
 		}
-		
-		overlay.GetComponent<AvatarSceneOverlay>().hide();
 	}
 	
 	
-	public void showNextButton()
+	// From AvatarsContainer
+
+	public void notify()
 	{
+		// show next Button
+	
 		nextButton.SetActive(true);
+		
+		
+		// request selected avatars
+		
+		if(PlayerPrefs.HasKey("roomId"))
+		{
+			var roomId = PlayerPrefs.GetString("roomId");
+			
+			var data = new Dictionary<string,object>();
+			data.Add("roomId", roomId);
+
+			_tr.requestSelectedAvatars(data);
+		}
 	}
 
 
