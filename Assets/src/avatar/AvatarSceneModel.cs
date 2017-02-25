@@ -44,9 +44,12 @@ public class AvatarSceneModel : MonoBehaviour, SocketConnectionInterface {
 				case Constants.REQUESTAVATARS_CODE:
 
 					JArray rms = (JArray)_responseToken;
-
-					foreach (JToken s in rms)
-						_controller.disableAvatar((int)s);
+					int[] avatars = new int[rms.Count];
+					
+					for(int index = 0; index < rms.Count;index++)
+						avatars[index] = (int)rms[index];
+					
+					_controller.disableAvatar(avatars);
 
 				break;
 			}
