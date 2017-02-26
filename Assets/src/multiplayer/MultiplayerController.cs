@@ -68,6 +68,15 @@ public class MultiplayerController : MonoBehaviour{
 
 
 	/* Button handlers */
+	
+	public void refresh()
+	{
+		error.SetActive(false);
+		_tr.requestRooms();
+		loading.SetActive(true);
+		
+	}
+	
 
 	public void nextButtonHandler()
 	{
