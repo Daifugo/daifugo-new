@@ -60,6 +60,7 @@ public class SinglePlayerModel : MonoBehaviour, SocketConnectionInterface {
 
 	public void handleError()
 	{
-
+		SinglePlayerController c = controller.GetComponent<SinglePlayerController>();
+		c.showError();
 	}
 }
