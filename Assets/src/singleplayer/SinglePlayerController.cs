@@ -65,6 +65,14 @@ public class SinglePlayerController : MonoBehaviour{
 
 
 	/* Button Handlers */
+	
+	public void refresh()
+	{
+		error.SetActive(false);
+		_tr.requestRules();
+		loading.SetActive(true);
+		
+	}
 
 	public void back()
 	{
