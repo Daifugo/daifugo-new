@@ -59,7 +59,8 @@ public class MultiplayerModel : MonoBehaviour, SocketConnectionInterface {
 	
 	public void handleError()
 	{
-
+		MultiplayerController c = controller.GetComponent<MultiplayerController>();
+		c.showError();
 	}
 
 }
