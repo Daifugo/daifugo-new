@@ -103,7 +103,7 @@ public class MultiplayerController : MonoBehaviour{
 
 		if(roomId == null)
 		{
-			overlay.GetComponent<MultiplayerOverlay>().showMessageBox();
+			overlay.GetComponent<Overlay>().showMessageBox();
 		}
 		else
 		{
