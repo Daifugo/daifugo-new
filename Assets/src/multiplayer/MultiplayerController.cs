@@ -11,6 +11,7 @@ public class MultiplayerController : MonoBehaviour{
 	public GameObject loading;
 	public GameObject error;
 	public GameObject overlay;
+	public GameObject empty;
 
 	private Transporter _tr;
 	
@@ -62,9 +63,17 @@ public class MultiplayerController : MonoBehaviour{
 		}
 		
 		
-		// show next button
+		// show next button or empty
 		
-		nextButton.SetActive(true);
+		if(rooms.Length != 0)
+		{
+			nextButton.SetActive(true);
+		}
+		else
+		{
+			empty.SetActive(true);
+		}
+			
 	}
 
 
