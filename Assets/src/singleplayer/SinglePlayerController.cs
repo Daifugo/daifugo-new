@@ -10,6 +10,7 @@ public class SinglePlayerController : MonoBehaviour{
 	public GameObject ruleListContainer;
 	public GameObject loading;
 	public GameObject nextButton;
+	public GameObject error;
 
 	private Transporter _tr;
 
@@ -25,6 +26,13 @@ public class SinglePlayerController : MonoBehaviour{
 		loading.SetActive(true);
 	}
 
+	// From SinglePlayerModel
+	
+	public void showError()
+	{
+		loading.SetActive(false);
+		error.SetActive(true);
+	}
 	
 	public void renderRules(Dictionary<string,string>[] rules)
 	{
