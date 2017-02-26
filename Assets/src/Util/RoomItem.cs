@@ -13,15 +13,18 @@ public class RoomItem : MonoBehaviour {
 	private float _YCoor = 0.0f;
 
 
-	public void setRoomDetails(string[] rulesStr, string name, string num)
+	public void setRoomDetails(string rulesStr, string name, string num)
 	{
 
 
 		/* set rules test */
+		
+		char[] splitComma = {','};
+		string[] rule = rulesStr.Split(splitComma);
 
 		Text txtRules = rules.GetComponent<Text> ();
 
-		foreach(string str in rulesStr)
+		foreach(string str in rule)
 		{
 			txtRules.text = txtRules.text + str + ",\n";
 		}
