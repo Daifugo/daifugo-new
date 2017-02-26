@@ -65,7 +65,14 @@ public class RoomListContainer : MonoBehaviour {
 
 	public string getSelectedRoomToJoin()
 	{
-		return this.selectedRoom.GetComponent<RoomItem>().getRoomId();
+		if(!this.selectedRoom)
+		{
+			return null;
+		}
+		else
+		{
+			return this.selectedRoom.GetComponent<RoomItem>().getRoomId();
+		}
 	}
 
 
