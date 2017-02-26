@@ -83,7 +83,7 @@ public class GameSceneController : MonoBehaviour {
 	}
 
 
-	public void renderDealtCard(string userId, Card[] s)
+	public void renderDealtCard(string userId, Card[] s, int qty)
 	{
 		MainPlayer main = mainPlayer.GetComponent<MainPlayer>();
 
@@ -95,7 +95,7 @@ public class GameSceneController : MonoBehaviour {
 		{
 			List<GameObject> list = new List<GameObject>(playerSpaces);
 			GameObject b = list.Find(x => x.GetComponent<Player>().getId() == userId);
-			b.GetComponent<Player>().showCard(s);
+			b.GetComponent<Player>().showCard(s, qty);
 		}
 	}
 	
