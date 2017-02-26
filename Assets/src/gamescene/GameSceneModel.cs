@@ -164,6 +164,8 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 
 		string Id = (string)dataObject.GetValue("userId");
 		JArray dealtCards = (JArray)dataObject.GetValue("cards");
+		int qty = (int)dataObject.GetValue("qty");
+		
 
 		Card[] cards = new Card[dealtCards.Count];
 
@@ -178,7 +180,7 @@ public class GameSceneModel : MonoBehaviour,SocketConnectionInterface {
 			cards[i] = s;
 		}
 
-		_controller.renderDealtCard(Id,cards);
+		_controller.renderDealtCard(Id,cards,qty);
 
 	}
 
