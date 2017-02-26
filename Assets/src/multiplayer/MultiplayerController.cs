@@ -87,6 +87,11 @@ public class MultiplayerController : MonoBehaviour{
 		
 	}
 	
+	public void back()
+	{
+		SceneManager.LoadScene ("main");
+	}
+	
 
 	public void nextButtonHandler()
 	{
