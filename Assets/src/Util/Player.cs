@@ -81,11 +81,13 @@ public class Player : MonoBehaviour {
 	}
 
 
-	public void showCard(Card[] s)
+	public void showCard(Card[] s, int qty)
 	{
 		PlayerRightCardRenderer c = cardRenderTop.GetComponent<PlayerRightCardRenderer>();
 		PlayerLeftCardRenderer x = cardRenderTop.GetComponent<PlayerLeftCardRenderer>();
 		DealtCardRenderer m = cardRenderTop.GetComponent<DealtCardRenderer>();
+
+		this.setCardCount(qty);
 
 		if(c == null && x == null)
 		{
