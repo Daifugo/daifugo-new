@@ -11,6 +11,7 @@ public class SinglePlayerController : MonoBehaviour{
 	public GameObject loading;
 	public GameObject nextButton;
 	public GameObject error;
+	public GameObject overlay;
 
 	private Transporter _tr;
 
@@ -84,8 +85,16 @@ public class SinglePlayerController : MonoBehaviour{
 
 		RuleListContainer r = ruleListContainer.GetComponent<RuleListContainer> ();
 		string rules = r.getSelectedRules();
-		PlayerPrefs.SetString("rules",rules);
-		SceneManager.LoadScene ("avatar");
+		
+		if(rules == null)
+		{
+			overlay.GetComponent<Overlay>().showMessageBox();
+		}
+		else
+		{
+			PlayerPrefs.SetString("rules",rules);
+			SceneManager.LoadScene ("avatar");
+		}
 		
 	}
 
