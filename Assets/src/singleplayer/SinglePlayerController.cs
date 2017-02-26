@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
+
+public class SinglePlayerController : MonoBehaviour{
 
 	public GameObject transporter;
 	public GameObject ruleListContainer;
@@ -12,86 +12,49 @@ public class SinglePlayerController : MonoBehaviour, SocketConnectionInterface {
 	public GameObject nextButton;
 
 	private Transporter _tr;
-	private JToken _responseToken = null;
 
-
-	// Use this for initialization
+	
 	void Start () {
 
-
 		_tr = transporter.GetComponent<Transporter>();
-		_tr.setSocketDelegate(this);
-
 		_tr.requestRules();
 
 
-		/* show loading gif */
-
-		loading.SetActive(true);
-
-
-		/* Start coroutine */
-
-		StartCoroutine(parseData());
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
-
-	/* SocketConnectionInterface */
-
-	IEnumerator parseData()
-	{
-
-		while(_responseToken == null)
-			yield return null;
+		// show loading gif
 		
+		loading.SetActive(true);
+	}
 
-		/* Hide the loading gif */
-
+	
+	public void renderRules(Dictionary<string,string>[] rules)
+	{
+		StartCoroutine(renderRulesCoroutine(rules));
+		
+	}
+	
+	IEnumerator renderRulesCoroutine(Dictionary<string,string>[] rules)
+	{
+		// hide loading gif 
+		
 		loading.SetActive(false);
-
-
-		/* Render out the rules item */
-
-		JArray rms = (JArray)_responseToken;
+		
+		
+		// Render rules
+		
 		RuleListContainer r = ruleListContainer.GetComponent<RuleListContainer> ();
-
-		foreach (JToken s in rms) 
+		
+		foreach(var rule in rules)
 		{
-			Dictionary<string,string> ruleData = s.ToObject<Dictionary<string,string>> ();
-			yield return new WaitForSeconds(1.4f);
-			r.addRule (ruleData);
+			r.addRule(rule);
+			yield return new WaitForSeconds(1.5f);
 		}
-
-
-		/* activate the next button */
-
+		
+		
+		// show next button
+		
 		nextButton.SetActive(true);
-
 	}
 
-
-	public void receiveData(string dt)
-	{
-
-		JArray resArray = JArray.Parse (dt);
-		JToken response = resArray.First["response"];
-
-		_responseToken = response.SelectToken ("data");
-
-	}
-
-
-	public void handleError()
-	{
-
-	}
 
 	/* Button Handlers */
 
