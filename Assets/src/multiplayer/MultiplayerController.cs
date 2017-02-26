@@ -10,6 +10,7 @@ public class MultiplayerController : MonoBehaviour{
 	public GameObject nextButton;
 	public GameObject loading;
 	public GameObject error;
+	public GameObject overlay;
 
 	private Transporter _tr;
 	
@@ -86,11 +87,18 @@ public class MultiplayerController : MonoBehaviour{
 
 		string roomId = r.getSelectedRoomToJoin();
 
-		/* save it */
-
-		PlayerPrefs.SetString ("roomId", roomId);
-		SceneManager.LoadScene ("avatar");
-
+		if(roomId == null)
+		{
+			overlay.GetComponent<MultiplayerOverlay>().showMessageBox();
+		}
+		else
+		{
+			/* save selected room */
+			
+			PlayerPrefs.SetString ("roomId", roomId);
+			SceneManager.LoadScene ("avatar");
+		}
+			
 	}
 
 }
