@@ -9,6 +9,7 @@ public class MultiplayerController : MonoBehaviour{
 	public GameObject roomList;
 	public GameObject nextButton;
 	public GameObject loading;
+	public GameObject error;
 
 	private Transporter _tr;
 	
@@ -33,6 +34,12 @@ public class MultiplayerController : MonoBehaviour{
 	{
 		StartCoroutine(renderRoomsCoroutine(rooms));
 		
+	}
+	
+	public void showError()
+	{
+		loading.SetActive(false);
+		error.SetActive(true);
 	}
 	
 	
