@@ -40,12 +40,12 @@ public class RoomListContainer : MonoBehaviour {
 		rule.TryGetValue ("rules", out rules);
 		rule.TryGetValue("numOfPlayer", out numOfPlayer);
 
-
 		RoomItem r = roomObj.GetComponent<RoomItem> ();
+
 
 		/* set details */
 
-		r.setRoomDetails((string[])rules,(string)roomName,(string)numOfPlayer);
+		r.setRoomDetails((string)rules,(string)roomName,(string)numOfPlayer);
 
 		/* set geometry */
 
